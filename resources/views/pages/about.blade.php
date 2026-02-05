@@ -1,125 +1,53 @@
-<!-- filepath: d:\Dafa Code\TedXUnand\resources\views\pages\about.blade.php -->
+@extends('layouts.app')
+
 @section('title', 'About | TEDxUnand')
 <link rel="icon" type="image/webp" href="{{ asset('img/tedunand.webp') }}">
 
-@extends('layouts.app')
-
 @section('content')
-<div class="min-h-screen flex items-center justify-center relative"
-     style="background: url('{{ asset('img/tedabout.webp') }}') center center / cover no-repeat;">
-    <div class="absolute inset-0 z-0"></div>
-    <div class="relative z-10 max-w-3xl mx-auto p-8 rounded-lg shadow-2xl "
-         data-aos="fade-up" data-aos-duration="1000">
-        <h1 class="text-4xl font-extrabold text-red-600 mb-4 text-center"
-            data-aos="zoom-in" data-aos-delay="200">About TEDxUnand</h1>
-        <p class="text-lg text-white leading-relaxed text-center"
-           data-aos="fade-up" data-aos-delay="400">
-            TEDxUnand is an independent event organized by the Universitas Andalas community, featuring inspiring speakers, fresh ideas, and experiences that can transform the way we see the world. Join us in celebrating innovation, creativity, and the spirit of sharing.
-        </p>
-    </div>
-      <!-- Overlay hitam dengan opacity -->
+<section class="relative w-full py-16 px-4 md:px-0 overflow-x-hidden min-h-screen"
+    style="background: url('{{ asset('img/about.webp') }}') center center / cover no-repeat; background-attachment: fixed;">
+    <!-- Overlay hitam dengan opacity -->
     <div class="absolute inset-0 bg-black opacity-60 pointer-events-none z-0"></div>
-</div>
-<div id="cursor-anim-bg" style="position:fixed; inset:0; pointer-events:none; z-index:1;"></div>
-
-<!-- Animated TEDx X background, multiple spots -->
-<div style="
-    position: fixed;
-    left: 15%; top: 20%;
-    width: 220px; height: 220px;
-    transform: translate(-50%, -50%);
-    opacity: 0.10;
-    z-index: 0;
-    pointer-events: none;
-    user-select: none;
-    background: url('{{ asset('img/tedunand.webp') }}') center center / contain no-repeat;
-    animation: tedx-spin 60s linear infinite;
-"></div>
-<div style="
-    position: fixed;
-    left: 80%; top: 25%;
-    width: 160px; height: 160px;
-    transform: translate(-50%, -50%);
-    opacity: 0.08;
-    z-index: 0;
-    pointer-events: none;
-    user-select: none;
-    background: url('{{ asset('img/tedunand.webp') }}') center center / contain no-repeat;
-    animation: tedx-spin-rev 80s linear infinite;
-"></div>
-<div style="
-    position: fixed;
-    left: 30%; top: 75%;
-    width: 120px; height: 120px;
-    transform: translate(-50%, -50%);
-    opacity: 0.12;
-    z-index: 0;
-    pointer-events: none;
-    user-select: none;
-    background: url('{{ asset('img/tedunand.webp') }}') center center / contain no-repeat;
-    animation: tedx-spin 50s linear infinite;
-"></div>
-<div style="
-    position: fixed;
-    left: 70%; top: 70%;
-    width: 180px; height: 180px;
-    transform: translate(-50%, -50%);
-    opacity: 0.09;
-    z-index: 0;
-    pointer-events: none;
-    user-select: none;
-    background: url('{{ asset('img/tedunand.webp') }}') center center / contain no-repeat;
-    animation: tedx-spin-rev 70s linear infinite;
-"></div>
-<div style="
-    position: fixed;
-    left: 50%; top: 50%;
-    width: 480px; height: 480px;
-    transform: translate(-50%, -50%);
-    opacity: 0.08;
-    z-index: 0;
-    pointer-events: none;
-    user-select: none;
-    background: url('{{ asset('img/tedunand.webp') }}') center center / contain no-repeat;
-    animation: tedx-spin 40s linear infinite;
-"></div>
+    <div class="max-w-xl mx-auto text-center mt-[12rem] md:mt-[12rem]" data-aos="fade-down" data-aos-duration="1000">
+        <h1 class="text-4xl md:text-5xl font-extrabold text-white">
+            About <span class="text-[#E62B1E]">TED</span>
+        </h1>
+        <p class="mt-4 text-white">A journey of inspiration and action.</p>
+    </div>
+    <div class="relative max-w-2xl mx-auto">
+        <div class="border-l-4 border-[#E62B1E] pl-8 space-y-12">
+            <div class="relative" data-aos="fade-left" data-aos-delay="200" data-aos-duration="1000">
+                <span class="absolute -left-6 top-1 w-4 h-4 bg-[#E62B1E] rounded-full border-4 border-white"></span>
+                <h3 class="text-lg font-bold text-[#E62B1E] mb-1 text-left">What is TED?</h3>
+                <p class="text-white/90 text-left">
+                    is a global nonprofit organization dedicated to spreading Ideas, usually in the form of short talks (18 minutes or less) delivered by today's leading thinkers and influencers.
+                </p>
+            </div>
+            <div class="relative" data-aos="fade-left" data-aos-delay="400" data-aos-duration="1000">
+                <span class="absolute -left-6 top-1 w-4 h-4 bg-[#E62B1E] rounded-full border-4 border-white"></span>
+                <h3 class="text-lg font-bold text-[#E62B1E] mb-1 text-left">How TED Impacts the World?</h3>
+                <p class="text-white/90 text-left">
+                    stands for Technology, Entertainment, and Design; and its primary focus has always been on sharing innovation and ideas across all fields. Many of these talks are given at the annual TED conference in Vancouver, British Columbia, and are freely available on TED.com.
+                </p>
+            </div>
+        </div>
+    </div>
+    {{-- Section: Why TEDx --}}
+    @include('components.why')
+</section>
 
 <style>
-@keyframes tedx-spin {
-    0% { transform: translate(-50%, -50%) rotate(0deg);}
-    100% { transform: translate(-50%, -50%) rotate(360deg);}
-}
-@keyframes tedx-spin-rev {
-    0% { transform: translate(-50%, -50%) rotate(0deg);}
-    100% { transform: translate(-50%, -50%) rotate(-360deg);}
+@media (max-width: 767px) {
+    .mt-\[12rem\] {
+        margin-top: 4rem !important;
+    }
 }
 </style>
-
 
 @push('scripts')
 <script src="https://cdn.jsdelivr.net/npm/aos@2.3.4/dist/aos.js"></script>
 <script>
     AOS.init();
-</script>
-<script>
-const cursorBg = document.getElementById('cursor-anim-bg');
-document.addEventListener('mousemove', function(e) {
-    cursorBg.innerHTML = `
-        <div style="
-            position: fixed;
-            left: ${e.clientX - 100}px;
-            top: ${e.clientY - 100}px;
-            width: 200px;
-            height: 200px;
-            border-radius: 50%;
-            background: radial-gradient(circle, rgba(245,48,3,0.25) 0%, rgba(245,48,3,0.08) 70%, transparent 100%);
-            pointer-events: none;
-            transition: left 0.1s, top 0.1s;
-            filter: blur(8px);
-            z-index: 1;
-        "></div>
-    `;
-});
 </script>
 @endpush
 @endsection

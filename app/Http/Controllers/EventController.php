@@ -2,9 +2,12 @@
 
 namespace App\Http\Controllers;
 
-use Illuminate\Http\Request;
 use App\Models\Event;
+//use App\Models\Ticket;
 use App\Models\Speaker;
+use Illuminate\Http\Request;
+use App\Models\AdminActivity;
+use App\Models\EventCategory;
 
 class EventController extends Controller
 {
@@ -13,7 +16,7 @@ class EventController extends Controller
      */
     public function index()
     {
-        $events = Event::with('speaker')->get();
+        $events = Event::with('speakers', 'eventCategory')->orderBy('event_date', 'desc')->get();
         return view('pages.admin.event', compact('events'));
     }
 
@@ -23,7 +26,9 @@ class EventController extends Controller
     public function create()
     {
         $speakers = Speaker::all();
-        return view('pages.admin.event.create', compact('speakers'));
+        $categories = EventCategory::all();
+        //$tickets =  Ticket::all();
+        return view('pages.admin.event.create', compact('speakers', 'categories'));
     }
 
     /**
@@ -38,23 +43,42 @@ class EventController extends Controller
             'location' => 'required|string|max:255',
             'photo' => 'nullable|mimes:jpg,jpeg,png,webp,svg|max:4096',
             'registration_link' => 'nullable|url',
-            'speaker_id' => 'nullable|exists:speakers,id',
-            'category' => 'nullable|string|max:100',
-            'ticket_price' => 'nullable|numeric|min:0',
+            'speaker_id' => 'nullable|array',
+            'speaker_id.*' => 'exists:speakers,id',
+            'event_category_id' => 'required|exists:eventcategories,id',
+            //'ticket_id' => 'required|exists:tickets,id',
         ]);
 
         $data = $request->only([
             'title', 'description', 'event_date', 'location',
-            'registration_link', 'speaker_id', 'category', 'ticket_price'
+            'registration_link', 'event_category_id'
         ]);
 
         if ($request->hasFile('photo')) {
             $data['photo'] = $request->file('photo')->store('events', 'public');
         }
 
-        Event::create($data);
+        $event = Event::create($data);
+        if ($request->filled('speaker_id')) {
+            $event->speakers()->sync($request->speaker_id);
+        } else {
+            $event->speakers()->detach();
+        }
 
-        return redirect()->route('dashboard.events')->with('success', 'Event berhasil ditambahkan!');
+        // Tambahkan aktivitas admin
+        AdminActivity::create([
+            'activity' => 'Event <span style="border:1.5px solid #dc2626; color:#dc2626; background:#fff; border-radius:6px; padding:2px 10px; font-weight:bold; display:inline-block;">' . e($event->title) . '</span> Added Successfully!.'
+        ]);
+
+        // if ($request->filled('ticket_name') && $request->filled('ticket_price')) {
+        //     Ticket::create([
+        //         'name' => $request->ticket_name,
+        //         'price' => $request->ticket_price,
+        //         'event_id' => $event->id,
+        //     ]);
+        // }
+
+        return redirect()->route('dashboard.events.event')->with('success', 'Event Added Successfully!');
     }
 
     /**
@@ -62,7 +86,7 @@ class EventController extends Controller
      */
     public function show(string $id)
     {
-        $event = Event::with('speaker')->findOrFail($id);
+        $event = Event::with('speakers')->findOrFail($id);
         return view('pages.admin.event.show', compact('event'));
     }
 
@@ -71,9 +95,10 @@ class EventController extends Controller
      */
     public function edit(string $id)
     {
-        $event = Event::findOrFail($id);
+        $event = Event::with('speakers')->findOrFail($id);
         $speakers = Speaker::all();
-        return view('pages.admin.event.edit', compact('event', 'speakers'));
+        $categories = EventCategory::all();
+        return view('pages.admin.event.edit', compact('event', 'speakers', 'categories'));
     }
 
     /**
@@ -81,7 +106,7 @@ class EventController extends Controller
      */
     public function update(Request $request, string $id)
     {
-        $event = Event::findOrFail($id);
+        $event = Event::with('speakers')->findOrFail($id);
 
         $request->validate([
             'title' => 'required|string|max:255',
@@ -90,14 +115,15 @@ class EventController extends Controller
             'location' => 'required|string|max:255',
             'photo' => 'nullable|mimes:jpg,jpeg,png,webp,svg|max:4096',
             'registration_link' => 'nullable|url',
-            'speaker_id' => 'nullable|exists:speakers,id',
-            'category' => 'nullable|string|max:100',
-            'ticket_price' => 'nullable|numeric|min:0',
+            'speaker_id' => 'nullable|array',
+            'speaker_id.*' => 'exists:speakers,id',
+            'event_category_id' => 'required|exists:eventcategories,id',
+            //'ticket_id' => 'required|exists:tickets,id',
         ]);
 
         $data = $request->only([
             'title', 'description', 'event_date', 'location',
-            'registration_link', 'speaker_id', 'category', 'ticket_price'
+            'registration_link', 'event_category_id'
         ]);
 
         if ($request->hasFile('photo')) {
@@ -105,8 +131,18 @@ class EventController extends Controller
         }
 
         $event->update($data);
+        if ($request->filled('speaker_id')) {
+            $event->speakers()->sync($request->speaker_id);
+        } else {
+            $event->speakers()->detach();
+        }
 
-        return redirect()->route('dashboard.events')->with('success', 'Event berhasil diupdate!');
+        // Tambahkan aktivitas admin
+        AdminActivity::create([
+            'activity' => 'Event <span style="border:1.5px solid #dc2626; color:#dc2626; background:#fff; border-radius:6px; padding:2px 10px; font-weight:bold; display:inline-block;">' . e($event->title) . '</span> Updated Successfully!.'
+        ]);
+
+        return redirect()->route('dashboard.events.event')->with('success', 'Event Updated Successfully!');
     }
 
     /**
@@ -114,9 +150,49 @@ class EventController extends Controller
      */
     public function destroy(string $id)
     {
-        $event = Event::findOrFail($id);
+        $event = Event::with('speakers')->findOrFail($id);
+        $eventTitle = $event->title;
         $event->delete();
 
-        return redirect()->route('dashboard.events')->with('success', 'Event berhasil dihapus!');
+        // Tambahkan aktivitas admin
+        AdminActivity::create([
+            'activity' => 'Event <span style="border:1.5px solid #dc2626; color:#dc2626; background:#fff; border-radius:6px; padding:2px 10px; font-weight:bold; display:inline-block;">' . e($eventTitle) . '</span> Deleted Successfully!.'
+        ]);
+
+        return redirect()->route('dashboard.events.event')->with('success', 'Event Deleted Successfully!');
+    }
+
+    public function events()
+    {
+        $events = Event::with('speakers')->orderBy('event_date', 'desc')->take(5)->get();
+        return view('pages.events', compact('events'));
+    }
+
+    public function mainEventPage()
+    {
+        // Ambil event dengan kategori "MainEvent" terbaru
+        $mainEvent = Event::with('eventCategory')
+            ->whereHas('eventCategory', function ($q) {
+                $q->where('name', 'MainEvent');
+            })
+            ->orderBy('event_date', 'desc')
+            ->first();
+
+        return view('pages.mainevent', compact('mainEvent'));
+    }
+
+
+    public function preeventPage()
+    {
+        // Ambil speaker yang ingin ditampilkan di Card 2
+        $speaker = Speaker::find(1); // Ganti 1 dengan ID speaker yang kamu inginkan
+
+        $highlightCard2 = [
+            'photo' => $speaker ? 'storage/' . $speaker->photo : '',
+            'name' => $speaker ? $speaker->name : '',
+            'description' => $speaker ? $speaker->description : '',
+        ];
+
+        return view('pages.preevent', compact('highlightCard2'));
     }
 }

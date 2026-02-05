@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Models\Speaker;
+use App\Models\AdminActivity;
 
 class SpeakerController extends Controller
 {
@@ -42,9 +43,14 @@ class SpeakerController extends Controller
             $data['photo'] = $request->file('photo')->store('speakers', 'public');
         }
 
-        Speaker::create($data);
+        $speaker = Speaker::create($data);
 
-        return redirect()->route('dashboard.speaker')->with('success', 'Speaker berhasil ditambahkan!');
+        // Tambahkan aktivitas admin
+        AdminActivity::create([
+            'activity' => 'Speaker <span style="border:1.5px solid #fde047; color:#fde047; background:#fff; border-radius:6px; padding:2px 10px; font-weight:bold; display:inline-block;">' . e($speaker->name) . '</span> Added Successfully!.'
+        ]);
+
+        return redirect()->route('dashboard.speaker.speaker')->with('success', 'Speaker Added Successfully!');
     }
 
     /**
@@ -86,7 +92,12 @@ class SpeakerController extends Controller
 
         $speaker->update($data);
 
-        return redirect()->route('dashboard.speaker')->with('success', 'Speaker berhasil diupdate!');
+        // Tambahkan aktivitas admin
+        AdminActivity::create([
+            'activity' => 'Speaker <span style="border:1.5px solid #fde047; color:#fde047; background:#fff; border-radius:6px; padding:2px 10px; font-weight:bold; display:inline-block;">' . e($speaker->name) . '</span> Updated Successfully!.'
+        ]);
+
+        return redirect()->route('dashboard.speaker.speaker')->with('success', 'Speaker Updated Successfully!');
     }
 
     /**
@@ -95,8 +106,14 @@ class SpeakerController extends Controller
     public function destroy(string $id)
     {
         $speaker = Speaker::findOrFail($id);
+        $speakerName = $speaker->name;
         $speaker->delete();
 
-        return redirect()->route('dashboard.speaker')->with('success', 'Speaker berhasil dihapus!');
+        // Tambahkan aktivitas admin
+        AdminActivity::create([
+            'activity' => 'Speaker <span style="border:1.5px solid #fde047; color:#fde047; background:#fff; border-radius:6px; padding:2px 10px; font-weight:bold; display:inline-block;">' . e($speakerName) . '</span> Deleted Successfully!.'
+        ]);
+
+        return redirect()->route('dashboard.speaker.speaker')->with('success', 'Speaker Deleted Successfully!');
     }
 }

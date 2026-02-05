@@ -1,252 +1,279 @@
-<nav id="main-navbar" class="fixed w-full z-50 transition-colors duration-500"
-data-aos="fade-down"
-data-aos-duration="1000">
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap" rel="stylesheet">
-    <div class="max-w-7xl mx-auto px-4 flex items-center justify-between h-16">
-        <!-- Logo -->
-        <div class="flex-shrink-0 flex items-center gap-2">
-            <button onclick="window.location.href='{{ url('/') }}'"
-                style="background: none; border: none; padding: 0; margin: 0; cursor: pointer;">
-                <img src="{{ asset('img/TEDxUniversitasAndalas.webp') }}" alt="TEDx Andalas University Logo" class="h-14 w-auto" />
-            </button>
+<nav class="fixed top-0 left-0 w-full z-50 transition-colors duration-500 bg-white/50 backdrop-blur-lg shadow-lg border-b border-black/10"
+    data-aos="fade-down"
+    data-aos-duration="1000"
+    style="background-image: url('{{ asset('img/navbar.webp') }}'); background-position: right 30px; background-repeat: no-repeat; background-size: auto 100%;">
+    <!-- Gambar dekorasi -->
+    <img src="{{ asset('img/navbar2.webp') }}"
+        alt=""
+        class="pointer-events-none select-none absolute left-0 top-0 w-40 z-0 hidden md:block">
+
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&family=Playfair+Display:wght@700&display=swap" rel="stylesheet">
+
+    @php
+        $navItems = [
+            ['name' => 'Home', 'url' => '/dashboard'],
+            ['name' => 'About', 'url' => '/about'],
+            ['name' => 'Sponsorship', 'url' => '/sponsorship'],
+            ['name' => 'FAQ', 'url' => '/faq'],
+        ];
+    @endphp
+
+    <!-- DESKTOP NAVBAR -->
+    <div class="hidden md:flex flex-col w-full">
+        <!-- Logo Tengah -->
+        <div class="flex flex-col items-center pt-1">
+            <img src="{{ asset('img/TEDxUniversitasAndalas.webp') }}" alt="TEDx Andalas University Logo" class="h-16 w-auto mx-auto" />
         </div>
-        @php
-            $navItems = [
-                ['name' => 'Home', 'url' => '/dashboard'],
-                ['name' => 'About', 'url' => '/about'],
-                ['name' => 'Sponsorship', 'url' => '/sponsorship'],
-                ['name' => 'FAQ', 'url' => '/faq'],
-            ];
-        @endphp
-        <div class="hidden md:flex items-center gap-8">
+        <!-- Menu Navigasi Tengah -->
+        <div class="flex justify-center items-center gap-24 py-1 border-t border-black/10">
             @foreach ($navItems as $item)
                 <a href="{{ $item['url'] }}"
-                    class="relative text-white font-light transition duration-200
+                    class="relative text-black font-semibold text-lg transition duration-200
                             hover:text-red-600
                             after:absolute after:left-0 after:-bottom-1 after:w-0 after:h-0.5 after:bg-red-600 after:transition-all after:duration-300
                             hover:after:w-full
                             {{ request()->is(ltrim($item['url'], '/')) ? 'text-red-600 after:w-full' : '' }}">
-                        {{ $item['name'] }}
+                    {{ $item['name'] }}
                 </a>
             @endforeach
-            <!-- Events with dropdown (click to open) -->
-            <div class="relative flex items-center gap-1" id="events-dropdown-parent">
-                <a href="/events"
-                    class="text-white font-medium transition duration-200 hover:text-red-600
-                    {{ request()->is('events') ? 'text-red-600' : '' }}">
+
+            <!-- Events parent (tanpa dropdown menu) -->
+            <div class="relative flex items-center gap-1 group pb-4 mt-4"
+                    id="events-dropdown-parent"
+                    onmouseenter="showDropdown('events')" onmouseleave="hideDropdown('events')">
+                <a href="/events" class="text-black font-semibold text-lg transition duration-200 hover:text-red-600 {{ request()->is('events') ? 'text-red-600' : '' }}">
                     Events
                 </a>
-                <button type="button" id="events-dropdown-arrow-btn"
-                    class="flex items-center focus:outline-none text-white">
-                    <svg class="w-4 h-4 transition-transform duration-200" id="events-dropdown-arrow" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+                <button type="button" class="flex items-center focus:outline-none text-black">
+                    <svg class="w-4 h-4 transition-transform duration-200 group-hover:rotate-180" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
                         <path d="M6 9l6 6 6-6"/>
                     </svg>
                 </button>
-                <!-- Dropdown menu -->
-                <div id="events-dropdown-menu"
-                    class="absolute -left-8 mt-2 md:mt-[14.5rem] min-w-[220px] bg-gradient-to-br from-black via-gray-900 to-black bg-opacity-95 rounded-2xl shadow-2xl py-4 z-20 hidden ring-1 ring-red-600/40 border border-red-600/20">
-                    <div class="px-4 pb-2 text-xs uppercase tracking-widest text-red-400 font-bold">Category</div>
-                    <a href="/events/pre-event"
-                        class="flex items-center gap-3 px-5 py-3 text-white font-semibold hover:bg-gradient-to-r hover:from-red-600 hover:to-yellow-400 hover:text-white transition rounded-xl duration-200 mb-2 group">
-                        <span class="flex items-center justify-center w-9 h-9 rounded-full bg-white/10 shadow group-hover:bg-white/20 transition">
-                            <img src="{{ asset('img/preevent.webp') }}" alt="Pre-Event" class="w-6 h-6" />
-                        </span>
-                        <span class="flex-1">
-                            <span class="block text-base font-bold">Pre Event</span>
-                        </span>
-                        <svg class="w-4 h-4 text-red-400 opacity-0 group-hover:opacity-100 transition" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M9 5l7 7-7 7"/></svg>
-                    </a>
-                    <a href="/events/main-event"
-                        class="flex items-center gap-3 px-5 py-3 text-white font-semibold hover:bg-gradient-to-r hover:from-yellow-400 hover:to-red-600 hover:text-white transition rounded-xl duration-200 group">
-                        <span class="flex items-center justify-center w-9 h-11 rounded-full bg-white/10 shadow group-hover:bg-white/20 transition">
-                            <img src="{{ asset('img/mainevent.webp') }}" alt="Main Event" class="w-6 h-8" />
-                        </span>
-                        <span class="flex-1">
-                            <span class="block text-base font-bold">Main Event</span>
-
-                        </span>
-                        <svg class="w-4 h-4 text-yellow-400 opacity-0 group-hover:opacity-100 transition" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M9 5l7 7-7 7"/></svg>
-                    </a>
-                </div>
-            </div>
-            <!-- Shop with dropdown (click to open) -->
-            <div class="relative flex items-center gap-1" id="shop-dropdown-parent">
-                <a href="/shop"
-                    class="text-white font-medium transition duration-200 hover:text-red-600
-                    {{ request()->is('shop') ? 'text-red-600' : '' }}">
-                    Shop
-                </a>
-                <button type="button" id="shop-dropdown-arrow-btn"
-                    class="flex items-center focus:outline-none text-white">
-                    <svg class="w-4 h-4 transition-transform duration-200" id="shop-dropdown-arrow" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
-                        <path d="M6 9l6 6 6-6"/>
-                    </svg>
-                </button>
-                <!-- Dropdown menu -->
-                <div id="shop-dropdown-menu"
-                    class="absolute -left-[6rem] mt-[14rem] min-w-[180px] w-64 max-w-xs bg-gradient-to-br from-black via-gray-900 to-black bg-opacity-95 rounded-2xl shadow-2xl py-4 z-20 hidden ring-1 ring-red-600/40 border border-red-600/20 overflow-x-auto">
-                    <div class="px-4 pb-2 text-xs uppercase tracking-widest text-red-400 font-bold">Category</div>
-                    <a href="/shop/tickets"
-                        class="flex items-center gap-3 px-5 py-3 text-white font-semibold hover:bg-gradient-to-r hover:from-red-600 hover:to-yellow-400 hover:text-white transition rounded-xl duration-200 mb-2 group">
-                        <span class="flex items-center justify-center w-9 h-9 rounded-full bg-white/10 shadow group-hover:bg-white/20 transition">
-                            <img src="{{ asset('img/shop/ticket.webp') }}" alt="Tickets" class="w-8 h-8" />
-                        </span>
-                        <span class="flex-1">
-                            <span class="block text-base font-bold">Tickets</span>
-                        </span>
-                        <!-- Tambahkan panah di sini -->
-                        <svg class="w-4 h-4 text-red-400 opacity-0 group-hover:opacity-100 transition" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M9 5l7 7-7 7"/></svg>
-                    </a>
-                    <a href="/shop/merchs"
-                        class="flex items-center gap-3 px-5 py-3 text-white font-semibold hover:bg-gradient-to-r hover:from-yellow-400 hover:to-red-600 hover:text-white transition rounded-xl duration-200 group">
-                            <span class="flex items-center justify-center w-10 h-11 rounded-full bg-white/10 shadow group-hover:bg-white/20 transition">
-                                <img src="{{ asset('img/shop/merch.webp') }}" alt="Merchs" class="w-12 h-12" />
-                            </span>
-                            <span class="flex-1">
-                                <span class="block text-base font-bold">Merchs</span>
-                            </span>
-                            <!-- Tambahkan panah di sini -->
-                            <svg class="w-4 h-4 text-yellow-400 opacity-0 group-hover:opacity-100 transition" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M9 5l7 7-7 7"/></svg>
-                    </a>
-                </div>
             </div>
         </div>
-        <!-- Mobile menu button -->
-        <div class="md:hidden flex items-center">
-            <button id="navbar-toggle" class="text-white focus:outline-none">
-                <svg width="28" height="28" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
-                    <line x1="4" y1="6" x2="20" y2="6"/>
-                    <line x1="4" y1="12" x2="20" y2="12"/>
-                    <line x1="4" y1="18" x2="20" y2="18"/>
-                </svg>
-            </button>
-        </div>
-    </div>
-    <!-- Mobile Menu -->
-    <div id="navbar-menu" class="md:hidden bg-black bg-opacity-95 px-4 pt-2 pb-4 space-y-2 hidden">
-        @foreach ($navItems as $item)
-            <a href="{{ $item['url'] }}"
-                class="block text-white font-medium transition hover:text-red-600 {{ request()->is(ltrim($item['url'], '/')) ? 'text-red-600' : '' }}">
-                {{ $item['name'] }}
+        <!-- Dropdown menu (Events) - letakkan di luar flex utama -->
+        <div id="events-dropdown-menu"
+            class="fixed left-1/2 top-48 z-40 hidden -translate-x-1/2 w-[700px] max-w-full
+                bg-gradient-to-br from-[#EC9F1E] via-red-500 to-gray-900
+                backdrop-blur-xl rounded-3xl shadow-2xl border border-yellow-300/40 ring-2 ring-yellow-400/10
+                transition-all duration-300 py-10 flex justify-center gap-0"
+            onmouseenter="showDropdown('events')" onmouseleave="hideDropdown('events')">
+            <!-- Card 1: Pre Event -->
+            <a href="/events/pre-event"
+                class="dropdown-card-item group flex flex-col items-center px-8 py-6 transition-all duration-300"
+                style="margin-right: 40px; margin-top: 10px;">
+                <div class="relative">
+                    <img src="{{ asset('img/preevent.png') }}" alt="Pre-Event"
+                        class="w-34 h-40  transition-all duration-500
+                            group-hover:scale-110 group-hover:rotate-6 group-hover:blur-[2px]" />
+                    <div class="absolute bg-gradient-to-t from-red-700/70
+                        scale-y-0 origin-bottom group-hover:scale-y-100 transition-transform duration-500 ease-out"></div>
+                    <span class="absolute bottom-4 left-1/2 -translate-x-1/2 text-xl font-bold text-white
+                        opacity-0 group-hover:opacity-100 group-hover:animate-bounceIn
+                        whitespace-nowrap transition-all duration-500">Pre Event</span>
+                </div>
             </a>
-        @endforeach
-        <!-- Events with dropdown for mobile -->
-        <div class="border-t border-gray-700 mt-2 pt-2">
-            <button id="mobile-events-toggle" class="flex items-center gap-1 w-full text-left text-white font-medium transition hover:text-red-600 focus:outline-none">
-                Events
-                <svg class="w-4 h-4 transition-transform duration-200" id="mobile-events-arrow" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
-                    <path d="M6 9l6 6 6-6"/>
-                </svg>
-            </button>
-            <div id="mobile-events-menu" class="pl-4 mt-1 space-y-1 hidden">
-                <a href="/events/pre-event" class="block text-white hover:text-red-600 transition">Pre-Event</a>
-                <a href="/events/main-event" class="block text-white hover:text-red-600 transition">Main Event</a>
-            </div>
+            <div class="w-px bg-gray-700/60 rounded-full"
+                style="height: 180px; margin-right: 80px; margin-left: 10px;"></div>
+            <!-- Card 2: Main Event -->
+            <a href="/events/main-event"
+                class="dropdown-card-item group flex flex-col items-center px-8 py-6 transition-all duration-300"
+                style="margin-top: 30px;">
+                <div class="relative">
+                    <img src="{{ asset('img/mainevent.png') }}" alt="Main Event"
+                        class="w-34 h-40  transition-all duration-500
+                            group-hover:scale-110 group-hover:-rotate-6 group-hover:blur-[2px]" />
+                    <div class="absolute bg-gradient-to-t from-yellow-600/70
+                        scale-y-0 origin-bottom group-hover:scale-y-100 transition-transform duration-500 ease-out"></div>
+                    <span class="absolute bottom-4 left-1/2 -translate-x-1/2 text-xl font-bold text-white
+                        opacity-0 group-hover:opacity-100 group-hover:animate-bounceIn
+                    whitespace-nowrap transition-all duration-500">Main Event</span>
+                </div>
+            </a>
         </div>
-        <!-- Shop with dropdown for mobile -->
-        <div class="border-t border-gray-700 mt-2 pt-2">
-            <button id="mobile-shop-toggle" class="flex items-center gap-1 w-full text-left text-white font-medium transition hover:text-red-600 focus:outline-none">
-                Shop
-                <svg class="w-4 h-4 transition-transform duration-200" id="mobile-shop-arrow" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
-                    <path d="M6 9l6 6 6-6"/>
+    </div>
+
+    <!-- MOBILE NAVBAR -->
+    <div class="md:hidden flex flex-col w-full">
+        <div class="flex justify-between items-center px-4 py-2 bg-black shadow">
+            <img src="{{ asset('img/TEDxUniversitasAndalas.webp') }}" alt="TEDx Andalas University Logo" class="h-12 w-auto" />
+            <button id="navbar-toggle" class="text-white focus:outline-none transition-transform duration-300">
+                <span id="navbar-toggle-icon">
+                    <svg width="28" height="28" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+                        <line x1="4" y1="6" x2="20" y2="6"/>
+                        <line x1="4" y1="12" x2="20" y2="12"/>
+                        <line x1="4" y1="18" x2="20" y2="18"/>
+                    </svg>
+                </span>
+            </button>
+        </div>
+        <div id="navbar-menu"
+            class="fixed top-0 left-0 w-full h-full background-black/50 backdrop-blur-sm
+                z-[9999] px-0 pt-24 pb-8 transition-all duration-500 ease-in-out
+                transform -translate-y-full opacity-0 pointer-events-none">
+
+            <!-- Tombol close absolute di pojok kanan atas -->
+            <button id="navbar-close" type="button"
+                class="absolute top-6 right-6 z-[10001] bg-white/80 rounded-full p-2 shadow-lg focus:outline-none">
+                <svg width="32" height="32" fill="none" stroke="currentColor" stroke-width="3" viewBox="0 0 24 24">
+                    <line x1="6" y1="6" x2="18" y2="18"/>
+                    <line x1="6" y1="18" x2="18" y2="6"/>
                 </svg>
             </button>
-            <div id="mobile-shop-menu" class="pl-4 mt-1 space-y-1 hidden">
-                <a href="/shop/tickets" class="block text-white hover:text-red-600 transition">Tickets</a>
-                <a href="/shop/merchs" class="block text-white hover:text-red-600 transition">Merchs</a>
+
+            <!-- Logo TEDx di tengah atas -->
+            <div class="flex flex-col items-center mt-4 mb-8">
+                <img src="{{ asset('img/TEDxUniversitasAndalas.webp') }}"
+                    alt="TEDx Universitas Andalas Logo"
+                    class="w-32 drop-shadow-xl mb-2" />
+            </div>
+
+            <!-- Container isi menu dengan efek glassmorphism -->
+            <div class="bg-red-800 backdrop-blur-md rounded-2xl p-4 shadow-2xl space-y-6 mx-4">
+                @foreach ($navItems as $item)
+                    <a href="{{ $item['url'] }}"
+                        class="block text-xl font-bold py-2 px-4 rounded-lg transition
+                        {{ request()->is(ltrim($item['url'], '/')) ? 'bg-red-600 text-white shadow' : 'text-black hover:bg-red-100' }}">
+                        {{ $item['name'] }}
+                    </a>
+                @endforeach
+                <div class="border-t border-gray-300 mt-2 pt-4">
+                    <div class="flex items-center gap-2 w-full">
+                        <a href="/events" class="flex-1 text-xl font-bold text-black hover:text-red-600 transition focus:outline-none">
+                            Events
+                        </a>
+                        <button id="mobile-events-toggle" type="button"
+                            class="flex items-center focus:outline-none"
+                            style="padding:0;">
+                            <svg class="w-5 h-5 transition-transform duration-200" id="mobile-events-arrow" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+                                <path d="M6 9l6 6 6-6"/>
+                            </svg>
+                        </button>
+                    </div>
+                    <div id="mobile-events-menu" class="pl-4 mt-2 space-y-2 hidden">
+                        <a href="/events/pre-event"
+                            class="block text-base py-2 px-3 rounded-lg transition
+                            {{ request()->is('events/pre-event') ? 'bg-red-600 text-white shadow' : 'text-black hover:bg-red-100' }}">
+                            Pre-Event
+                        </a>
+                        <a href="/events/main-event"
+                            class="block text-base py-2 px-3 rounded-lg transition
+                            {{ request()->is('events/main-event') ? 'bg-red-600 text-white shadow' : 'text-black hover:bg-red-100' }}">
+                            Main Event
+                        </a>
+                    </div>
+                </div>
             </div>
         </div>
     </div>
+
     <style>
-        #custom-x-cursor {
-            pointer-events: none !important;
-            z-index: 9999 !important;
+        .font-[Playfair_Display] {
+            font-family: 'Playfair Display', serif !important;
         }
-        .font-inter, nav, nav * {
-        font-family: 'Inter', Arial, sans-serif !important;
-    }
-    #main-navbar {
-        background: transparent;
-        /* transition already in class */
-    }
-    .navbar-scrolled {
-        background: rgba(24, 24, 32, 0.93);
-        backdrop-filter: blur(8px);
-        box-shadow: 0 4px 24px 0 #0005;
-    }
+        nav, nav * {
+            font-family: 'Inter', Arial, sans-serif !important;
+        }
+        .dropdown-card-item {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            text-decoration: none;
+            transition: transform 0.2s;
+        }
+        .dropdown-card-item:hover {
+            transform: translateY(-8px) scale(1.03);
+            z-index: 2;
+        }
+        @keyframes bounceIn {
+            0% {
+                opacity: 0;
+                transform: translateY(30px) scale(0.8);
+            }
+            60% {
+                opacity: 1;
+                transform: translateY(-10px) scale(1.05);
+            }
+            80% {
+                transform: translateY(2px) scale(0.98);
+            }
+            100% {
+                opacity: 1;
+                transform: translateY(0) scale(1);
+            }
+        }
+        .animate-bounceIn {
+            animation: bounceIn 0.7s cubic-bezier(.68,-0.55,.27,1.55) both;
+        }
     </style>
     <script>
-        document.getElementById('navbar-toggle').onclick = function() {
-            var menu = document.getElementById('navbar-menu');
-            menu.classList.toggle('hidden');
-        };
-        // Mobile events dropdown
-        document.getElementById('mobile-events-toggle').onclick = function() {
-            var menu = document.getElementById('mobile-events-menu');
-            var arrow = document.getElementById('mobile-events-arrow');
-            menu.classList.toggle('hidden');
-            arrow.classList.toggle('rotate-180');
-        };
-        // Desktop events dropdown (click to open/close)
-        document.getElementById('events-dropdown-arrow-btn').onclick = function(e) {
-            e.stopPropagation();
-            var eventsMenu = document.getElementById('events-dropdown-menu');
-            var eventsArrow = document.getElementById('events-dropdown-arrow');
-            var shopMenu = document.getElementById('shop-dropdown-menu');
-            var shopArrow = document.getElementById('shop-dropdown-arrow');
-            // Tutup shop jika sedang terbuka
-            shopMenu.classList.add('hidden');
-            shopArrow.classList.remove('rotate-180');
-            // Toggle events
-            eventsMenu.classList.toggle('hidden');
-            eventsArrow.classList.toggle('rotate-180');
-        };
-        // Desktop shop dropdown (click to open/close)
-        document.getElementById('shop-dropdown-arrow-btn').onclick = function(e) {
-            e.stopPropagation();
-            var shopMenu = document.getElementById('shop-dropdown-menu');
-            var shopArrow = document.getElementById('shop-dropdown-arrow');
-            var eventsMenu = document.getElementById('events-dropdown-menu');
-            var eventsArrow = document.getElementById('events-dropdown-arrow');
-            // Tutup events jika sedang terbuka
-            eventsMenu.classList.add('hidden');
-            eventsArrow.classList.remove('rotate-180');
-            // Toggle shop
-            shopMenu.classList.toggle('hidden');
-            shopArrow.classList.toggle('rotate-180');
-        };
-        // Close events dropdown when clicking outside
-        document.addEventListener('click', function(e) {
-            var menu = document.getElementById('events-dropdown-menu');
-            var btn = document.getElementById('events-dropdown-arrow-btn');
-            if (!btn.contains(e.target) && !menu.contains(e.target)) {
-                menu.classList.add('hidden');
-                document.getElementById('events-dropdown-arrow').classList.remove('rotate-180');
-            }
-        });
-        // Close shop dropdown when clicking outside
-        document.addEventListener('click', function(e) {
-            var menu = document.getElementById('shop-dropdown-menu');
-            var btn = document.getElementById('shop-dropdown-arrow-btn');
-            if (!btn.contains(e.target) && !menu.contains(e.target)) {
-                menu.classList.add('hidden');
-                document.getElementById('shop-dropdown-arrow').classList.remove('rotate-180');
-            }
-        });
-        // Mobile shop dropdown
-        document.getElementById('mobile-shop-toggle').onclick = function() {
-            var menu = document.getElementById('mobile-shop-menu');
-            var arrow = document.getElementById('mobile-shop-arrow');
-            menu.classList.toggle('hidden');
-            arrow.classList.toggle('rotate-180');
-        };
-        window.addEventListener('scroll', function() {
-            const navbar = document.getElementById('main-navbar');
-            if (window.scrollY > 30) {
-                navbar.classList.add('navbar-scrolled');
-            } else {
-                navbar.classList.remove('navbar-scrolled');
-            }
-        });
+        // Desktop dropdown
+        let dropdownTimeout = null;
+        function showDropdown(type) {
+            clearTimeout(dropdownTimeout);
+            document.getElementById(type + '-dropdown-menu').classList.remove('hidden');
+        }
+        function hideDropdown(type) {
+            dropdownTimeout = setTimeout(() => {
+                document.getElementById(type + '-dropdown-menu').classList.add('hidden');
+            }, 120);
+        }
     </script>
+
+    <style>
+    #navbar-menu.active {
+        transform: translateY(0);
+        opacity: 1;
+        pointer-events: auto;
+        z-index: 9999;
+    }
+    #navbar-menu {
+        transition: transform 0.4s cubic-bezier(.4,2,.6,1), opacity 0.3s;
+        z-index: 9999;
+    }
+    #navbar-close {
+        z-index: 10001;
+    }
+    </style>
+<script>
+    // Mobile menu toggle
+    const navbarToggle = document.getElementById('navbar-toggle');
+    const navbarMenu = document.getElementById('navbar-menu');
+    const navbarToggleIcon = document.getElementById('navbar-toggle-icon');
+    const navbarClose = document.getElementById('navbar-close');
+    let menuOpen = false;
+
+    navbarToggle.onclick = function() {
+    menuOpen = !menuOpen;
+    navbarMenu.classList.toggle('active', menuOpen);
+    if (menuOpen) {
+        document.body.style.overflow = 'hidden'; // lock scroll
+    } else {
+        document.body.style.overflow = '';
+    }
+};
+
+    // Tombol close di pojok kanan atas
+    navbarClose.onclick = function() {
+        navbarMenu.classList.remove('active');
+        menuOpen = false;
+        document.body.style.overflow = '';
+        // Kembalikan icon hamburger
+        navbarToggleIcon.innerHTML = `
+            <svg width="28" height="28" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+                <line x1="4" y1="6" x2="20" y2="6"/>
+                <line x1="4" y1="12" x2="20" y2="12"/>
+                <line x1="4" y1="18" x2="20" y2="18"/>
+            </svg>
+        `;
+    };
+
+    // Mobile events dropdown
+    document.getElementById('mobile-events-toggle').onclick = function() {
+        var menu = document.getElementById('mobile-events-menu');
+        var arrow = document.getElementById('mobile-events-arrow');
+        menu.classList.toggle('hidden');
+        arrow.classList.toggle('rotate-180');
+    };
+</script>
 </nav>

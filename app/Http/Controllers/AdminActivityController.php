@@ -25,6 +25,6 @@ class AdminActivityController extends Controller
             'activity' => $request->activity,
         ]);
 
-        return redirect()->back()->with('success', 'Activity added!');
+        return redirect()->back()->with('success', 'Activity Added!');
     }
 }

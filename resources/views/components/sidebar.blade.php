@@ -1,4 +1,4 @@
-<aside class="w-64 min-h-screen bg-gradient-to-b from-red-700 via-black to-gray-900 text-white flex flex-col shadow-2xl relative overflow-hidden">
+<aside class="fixed left-0 top-0 w-64 min-h-screen bg-gradient-to-b from-red-700 via-black to-gray-900 text-white flex flex-col shadow-2xl z-30">
     <!-- Decorative Gradient Circles -->
     <div class="absolute -top-10 -left-10 w-32 h-32 bg-red-500 opacity-30 rounded-full blur-2xl"></div>
     <div class="absolute bottom-10 right-0 w-24 h-24 bg-yellow-400 opacity-20 rounded-full blur-2xl"></div>
@@ -12,19 +12,26 @@
             <img src="{{ asset('img/admin/admin.webp') }}" alt="Dashboard" class="w-6 h-6 object-contain filter" style="filter: brightness(0) saturate(100%) invert(80%) sepia(100%) saturate(5000%) hue-rotate(90deg) brightness(120%) contrast(120%);" />
             Dashboard
         </a>
-        <a href="{{ url('/admin/event') }}" class="flex items-center gap-3 py-2 px-4 rounded-lg hover:bg-white/10 hover:scale-105 transition-all duration-200 font-semibold {{ request()->is('admin/event') ? 'bg-white/10' : '' }}">
+        <a href="{{ url('/admin/event') }}" class="flex items-center gap-3 py-2 px-4 rounded-lg hover:bg-white/10 hover:scale-105 transition-all duration-200 font-semibold {{ request()->is('admin/event*') ? 'bg-white/10' : '' }}">
             <img src="{{ asset('img/admin/events.webp') }}" alt="Events" class="w-6 h-6 object-contain filter" style="filter: brightness(0) saturate(100%) invert(23%) sepia(99%) saturate(2000%) hue-rotate(-10deg) brightness(105%) contrast(105%);" />
-            Events
+            Event
         </a>
-        <a href="{{ url('/admin/shop') }}" class="flex items-center gap-3 py-2 px-4 rounded-lg hover:bg-white/10 hover:scale-105 transition-all duration-200 font-semibold {{ request()->is('admin/shop') ? 'bg-white/10' : '' }}">
+        <a href="{{ url('/admin/shop') }}" class="flex items-center gap-3 py-2 px-4 rounded-lg hover:bg-white/10 hover:scale-105 transition-all duration-200 font-semibold {{ request()->is('admin/shop*') ? 'bg-white/10' : '' }}">
             <img src="{{ asset('img/admin/shop.webp') }}" alt="Shop" class="w-6 h-6 object-contain filter" style="filter: brightness(0) saturate(100%) invert(60%) sepia(100%) saturate(5000%) hue-rotate(320deg) brightness(120%) contrast(120%);" />
             Shop
         </a>
-        <a href="{{ url('/admin/speaker') }}" class="flex items-center gap-3 py-2 px-4 rounded-lg hover:bg-white/10 hover:scale-105 transition-all duration-200 font-semibold {{ request()->is('admin/speaker') ? 'bg-white/10' : '' }}">
+        <a href="{{ url('/admin/speaker') }}" class="flex items-center gap-3 py-2 px-4 rounded-lg hover:bg-white/10 hover:scale-105 transition-all duration-200 font-semibold {{ request()->is('admin/speaker*') ? 'bg-white/10' : '' }}">
             <img src="{{ asset('img/admin/speaker.webp') }}" alt="Speakers" class="w-6 h-6 object-contain filter" style="filter: brightness(0) saturate(100%) invert(88%) sepia(99%) saturate(2000%) hue-rotate(10deg) brightness(110%) contrast(110%);" />
-            Speakers
+            Speaker
         </a>
     </nav>
+    <form method="POST" action="{{ route('logout') }}" class="p-4 z-10 relative">
+        @csrf
+        <button type="submit" class="w-full flex items-center gap-3 py-2 px-4 rounded-lg hover:bg-white/10 hover:scale-105 transition-all duration-200 font-semibold text-left">
+            <img src="{{ asset('img/auth/logout.webp') }}" alt="Logout" class="w-6 h-6 object-contain filter" style="filter: brightness(0) saturate(100%) invert(20%) sepia(100%) saturate(2000%) hue-rotate(-30deg) brightness(110%) contrast(110%);" />
+            Logout
+        </button>
+    </form>
     <div class="p-4 border-t border-white/10 text-sm text-gray-300 z-10 relative">
         &copy; {{ date('Y') }} <span class="font-bold text-white">TEDxUnand</span>
     </div>

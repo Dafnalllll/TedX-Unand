@@ -14,4 +14,9 @@ class Speaker extends Model
         'description',
         'photo',
     ];
+
+    public function events()
+    {
+        return $this->belongsToMany(Event::class);
+    }
 }

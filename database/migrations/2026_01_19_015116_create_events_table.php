@@ -19,13 +19,14 @@ return new class extends Migration
             $table->string('location');
             $table->string('photo');
             $table->string('registration_link')->nullable();
-            $table->unsignedBigInteger('speaker_id'); // relasi ke speakers
-            $table->string('category');
-            $table->decimal('ticket_price', 12, 2);
+            $table->unsignedBigInteger('event_category_id');
+
+            //$table->unsignedBigInteger('ticket_id');
             $table->timestamps();
 
             // Foreign key constraint
-            $table->foreign('speaker_id')->references('id')->on('speakers')->onDelete('cascade');
+            $table->foreign('event_category_id')->references('id')->on('eventcategories')->onDelete('cascade');
+            //$table->foreign('ticket_id')->references('id')->on('tickets')->onDelete('cascade');
         });
     }
 

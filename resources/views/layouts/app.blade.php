@@ -20,11 +20,11 @@
         @stack('head')
         <style>
             html, body {
-                cursor: none !important;
+                cursor: auto !important; /* default cursor untuk mobile */
             }
             @media (min-width: 768px) {
                 html, body, * {
-                    cursor: none !important;
+                    cursor: none !important; /* hilangkan cursor hanya di desktop */
                 }
             }
         </style>
@@ -33,8 +33,16 @@
         <!-- Loading Overlay -->
         @include('components.loading')
         <div class="min-h-screen flex flex-col bg-white dark:bg-gray-900">
-            {{-- Navbar di paling atas --}}
-            @include('components.navbar')
+
+            {{-- Navbar hanya untuk halaman user --}}
+            @unless (
+                request()->routeIs('dashboard.admin') ||
+                request()->routeIs('dashboard.shop.*') ||
+                request()->routeIs('dashboard.speaker.*') ||
+                request()->routeIs('dashboard.events.*')
+            )
+                @include('components.navbar')
+            @endunless
 
             <!-- Page Heading -->
             @isset($header)
@@ -51,7 +59,13 @@
             </main>
 
             {{-- Footer di paling bawah, kecuali di dashboard admin --}}
-            @unless (request()->routeIs('dashboard.admin'))
+            @unless (
+                request()->routeIs('dashboard.admin') ||
+                request()->routeIs('dashboard.shop.*') ||
+                request()->routeIs('dashboard.speaker.*') ||
+                request()->routeIs('dashboard.events.*') ||
+                request()->routeIs('pages.notfound')
+            )
                 @include('components.footer')
             @endunless
 
@@ -61,42 +75,51 @@
         <div id="custom-x-cursor" class="hidden md:block pointer-events-none fixed z-50" style="width:48px;height:48px;"></div>
         <script>
             const customXCursor = document.getElementById('custom-x-cursor');
-            document.addEventListener('mousemove', function(e) {
-                customXCursor.style.left = (e.clientX - 24) + 'px';
-                customXCursor.style.top = (e.clientY - 24) + 'px';
-                customXCursor.innerHTML = `
-                    <img src="{{ asset('img/tedunand.webp') }}" alt="TEDx Cursor" style="width:48px;height:48px;object-fit:contain;pointer-events:none;user-select:none;" draggable="false" />
-                `;
-                customXCursor.style.display = 'block';
-            });
-            document.addEventListener('mouseleave', function() {
-                customXCursor.style.display = 'none';
-            });
+            let mouseMoveHandler = null;
+            let mouseLeaveHandler = null;
 
-            // Loading overlay logic
-            const loadingOverlay = document.querySelector('.loading-overlay');
-            if (loadingOverlay) {
-                loadingOverlay.style.display = 'flex';
-                window.addEventListener('load', function() {
-                    setTimeout(function() {
-                        loadingOverlay.style.display = 'none';
-                    }, 600); // 1.2 detik, bisa diubah sesuai selera
-                });
-                // Optional: show loading on internal link click
-                document.querySelectorAll('a').forEach(function(link) {
-                    link.addEventListener('click', function(e) {
-                        if (
-                            link.target !== '_blank' &&
-                            link.href &&
-                            !link.href.startsWith('javascript:') &&
-                            link.href.indexOf('#') === -1 &&
-                            link.hostname === window.location.hostname
-                        ) {
-                            loadingOverlay.style.display = 'flex';
-                        }
-                    });
-                });
+            function isDesktop() {
+                return window.innerWidth >= 768;
             }
+
+            function enableCustomCursor() {
+                if (mouseMoveHandler) return; // sudah aktif
+                mouseMoveHandler = function(e) {
+                    customXCursor.style.left = (e.clientX - 24) + 'px';
+                    customXCursor.style.top = (e.clientY - 24) + 'px';
+                    customXCursor.innerHTML = `
+                        <img src="{{ asset('img/tedunand.webp') }}" alt="TEDx Cursor" style="width:48px;height:48px;object-fit:contain;pointer-events:none;user-select:none;" draggable="false" />
+                    `;
+                    customXCursor.style.display = 'block';
+                };
+                mouseLeaveHandler = function() {
+                    customXCursor.style.display = 'none';
+                };
+                document.addEventListener('mousemove', mouseMoveHandler);
+                document.addEventListener('mouseleave', mouseLeaveHandler);
+                customXCursor.style.display = 'block';
+            }
+
+            function disableCustomCursor() {
+                if (!mouseMoveHandler) return; // sudah nonaktif
+                document.removeEventListener('mousemove', mouseMoveHandler);
+                document.removeEventListener('mouseleave', mouseLeaveHandler);
+                mouseMoveHandler = null;
+                mouseLeaveHandler = null;
+                customXCursor.style.display = 'none';
+            }
+
+            function updateCursorState() {
+                if (isDesktop()) {
+                    enableCustomCursor();
+                } else {
+                    disableCustomCursor();
+                }
+            }
+
+            // Jalankan saat load dan saat resize
+            updateCursorState();
+            window.addEventListener('resize', updateCursorState);
         </script>
     </body>
 </html>

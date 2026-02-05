@@ -1,10 +1,9 @@
-<!-- filepath: d:\Dafa Code\TedXUnand\resources\views\components\preeventcard.blade.php -->
 <style>
 .preevent-card-grid {
     position: relative;
     width: 100%;
-    min-height: 400px;
-    height: 100%; /* Ubah dari 700px ke 100% */
+    min-height: 300px;
+    height: 100%;
 }
 .preevent-card-item {
     position: absolute;
@@ -12,13 +11,11 @@
         transform 0.7s cubic-bezier(.68,-0.55,.27,1.55),
         box-shadow 0.3s,
         filter 0.3s;
-    box-shadow: 0 6px 24px #0002;
     border-radius: 1rem;
     overflow: hidden;
     cursor: pointer;
     z-index: 2;
     animation: floatCard 3s ease-in-out infinite alternate;
-    border: 3px solid transparent;
     position: absolute;
 }
 .preevent-card-item:hover {
@@ -49,28 +46,56 @@
     0% { --sparkle-angle: 0deg; }
     100% { --sparkle-angle: 360deg; }
 }
+
+/* ===== Responsive for Mobile Only ===== */
+@media (max-width: 767px) {
+    .preevent-card-grid {
+        min-height: 0 !important;
+        height: auto !important;
+        display: flex !important;
+        flex-direction: column !important;
+        align-items: center !important;
+        gap: 1.5rem !important;
+        position: relative !important;
+    }
+    .preevent-card-item {
+        position: static !important;
+        width: 90vw !important;
+        max-width: 320px !important;
+        margin: 0 auto !important;
+        rotate: 0deg !important;
+        animation: none !important;
+        box-shadow: 0 8px 24px #F5300320;
+    }
+    .preevent-card-img {
+        width: 100% !important;
+        height: 140px !important;
+    }
+    
+}
 </style>
 
 <div class="preevent-card-grid">
     <!-- Formasi W lebih menyebar dan lebar, dengan AOS dan delay -->
-    <div class="preevent-card-item" style="top:-100px; right:850px; rotate:10deg;"
+    <div class="preevent-card-item" style="top:-10px; right:750px; rotate:10deg;"
         data-aos="fade-down-right" data-aos-delay="0">
-        <img src="{{ asset('img/event/preevent/theuntoldjourney/untoldjourney1.webp') }}" alt="PreEvent 1" class="preevent-card-img" />
+        <img src="{{ asset('img/event/preevent/theuntoldjourney/untoldjourney3.webp') }}" alt="PreEvent 1" class="preevent-card-img" />
     </div>
-    <div class="preevent-card-item" style="top:250px; right:750px; rotate:8deg;"
+    <div class="preevent-card-item" style="top:280px; right:750px; rotate:8deg;"
         data-aos="fade-up-right" data-aos-delay="150">
-        <img src="{{ asset('img/event/preevent/theuntoldjourney/untoldjourney2.webp') }}" alt="PreEvent 2" class="preevent-card-img" />
+        <img src="{{ asset('img/event/preevent/theuntoldjourney/untoldjourney7.webp') }}" alt="PreEvent 2" class="preevent-card-img" />
     </div>
-    <div class="preevent-card-item" style="top:50px; left:360px; rotate:0deg;"
+    <div class="preevent-card-item" style="top:100px; left:360px; rotate:0deg;"
         data-aos="zoom-in" data-aos-delay="300">
         <img src="{{ asset('img/event/preevent/theuntoldjourney/untoldjourney1.webp') }}" alt="PreEvent 3" class="preevent-card-img" />
     </div>
-    <div class="preevent-card-item" style="top:250px; left:750px; rotate:-8deg;"
+    <div class="preevent-card-item" style="top:280px; left:750px; rotate:-8deg;"
         data-aos="fade-up-left" data-aos-delay="450">
         <img src="{{ asset('img/event/preevent/theuntoldjourney/untoldjourney4.webp') }}" alt="PreEvent 4" class="preevent-card-img" />
     </div>
-    <div class="preevent-card-item" style="top:-95px; left:850px; rotate:-10deg;"
+    <div class="preevent-card-item" style="top:-10px; left:750px; rotate:-10deg;"
         data-aos="fade-down-left" data-aos-delay="600">
         <img src="{{ asset('img/event/preevent/theuntoldjourney/untoldjourney5.webp') }}" alt="PreEvent 5" class="preevent-card-img" />
     </div>
 </div>
+

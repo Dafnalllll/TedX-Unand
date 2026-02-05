@@ -5,8 +5,18 @@
 
 @section('content')
 
-
-
+<!-- Background utama sponsorship.webp -->
+<div style="
+    position: fixed;
+    inset: 0;
+    width: 100vw;
+    height: 100vh;
+    z-index: 0;
+    background: url('{{ asset('img/sponsorship.webp') }}') center center / cover no-repeat;
+    opacity: 0.18;
+    pointer-events: none;
+    user-select: none;
+"></div>
 
 <!-- Animated TEDx X background, multiple spots -->
 <div style="
@@ -70,6 +80,7 @@
     background: url('{{ asset('img/tedunand.webp') }}') center center / contain no-repeat;
     animation: tedx-spin 40s linear infinite;
 "></div>
+
 @push('scripts')
 <script src="https://cdn.jsdelivr.net/npm/aos@2.3.4/dist/aos.js"></script>
 <script>
@@ -89,12 +100,13 @@
 </style>
 
 <div class="relative z-10">
-    <h2 class="text-3xl font-bold text-center mb-8 mt-12 text-red-700" data-aos="fade-down">Our Sponsors</h2>
+    <h2 class="text-7xl font-bold text-center mb-[8rem] mt-[12rem] text-red-700" data-aos="fade-down">Our Sponsor</h2>
     @include('components.sponsorshipcard')
-    <h2 class="text-3xl font-bold text-center mb-8 mt-12 text-red-700" data-aos="fade-down">Our Medpart</h2>
+    <h2 class="text-7xl font-bold text-center mb-[8rem] mt-[12rem] text-red-700" data-aos="fade-down">Our Medpart</h2>
     @include('components.medpart')
-    <h2 class="text-3xl font-bold text-center mb-8 mt-12 text-red-700" data-aos="fade-down">Our Contact</h2>
+    <h2 class="text-7xl font-bold text-center mb-[8rem] mt-[12rem] text-red-700" data-aos="fade-down">Our Contact</h2>
     @include('components.contact')
 </div>
+
 @endsection
 

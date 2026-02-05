@@ -4,13 +4,13 @@
 <link rel="icon" type="image/webp" href="{{ asset('img/tedunand.webp') }}">
 
 @section('content')
-<div class="min-h-screen flex flex-col items-center justify-center relative"
-     style="background: url('{{ asset('img/event/event-bg.webp') }}') center center / cover no-repeat;">
+<div class="min-h-screen flex flex-col items-center justify-center relative overflow-x-hidden"
+        style="background: url('{{ asset('img/event1.webp') }}') center center / cover no-repeat; background-attachment: fixed;">
     <div class="absolute inset-0 bg-black bg-opacity-60 z-0"></div>
-    <div class="relative z-10 w-full max-w-5xl mx-auto p-8 rounded-lg shadow-2xl bg-opacity-90"
-         data-aos="fade-up" data-aos-duration="1000">
+    <div class="relative z-10 w-full max-w-5xl mx-auto p-8 "
+            data-aos="fade-up" data-aos-duration="1000">
         <!-- OUR EVENTS Judul -->
-        <div class="flex flex-col items-center gap-2 md:gap-4 mb-8">
+        <div class="flex flex-col items-center gap-2 md:gap-4 mt-[4rem] -mr-[1rem]">
             <svg width="600" height="140" viewBox="0 0 600 140" fill="none" xmlns="http://www.w3.org/2000/svg" style="max-width:100%; position:relative;">
                 <defs>
                     <linearGradient id="tedx-gradient" x1="0" y1="0" x2="600" y2="0" gradientUnits="userSpaceOnUse">
@@ -34,9 +34,8 @@
                 </text>
             </svg>
         </div>
-         <div class="flex justify-center">
-        @include('components.eventscard')
-    </div>
+
+            <x-eventscard :events="$events" />
     </div>
 </div>
 

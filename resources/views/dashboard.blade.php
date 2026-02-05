@@ -25,7 +25,16 @@
 
         <style>
             html, body, a, button, [role="button"], .group, * {
-                cursor: none !important;
+                cursor: auto !important;
+            }
+            @media (min-width: 768px) {
+                html, body, a, button, [role="button"], .group, * {
+                    cursor: none !important;
+                }
+            }
+
+            html {
+                scroll-behavior: smooth;
             }
 
             @keyframes tedx-spin {
@@ -39,42 +48,47 @@
         </style>
     </head>
     <body class="bg-[#FDFDFC] text-[#1b1b18] min-h-screen flex flex-col relative overflow-x-hidden"
-    style="background: url('{{ asset('img/tedbg.webp') }}') center center / cover no-repeat;">
+    style="background: url('{{ asset('img/tedbg.webp') }}') center center / cover no-repeat; background-attachment: fixed;">
 
     {{-- Import Loading --}}
     @include('components.loading')
     <!-- Overlay hitam dengan opacity -->
-    <div class="absolute inset-0 bg-black opacity-60 pointer-events-none z-0"></div>
+    <div class="absolute inset-0 bg-black opacity-30 pointer-events-none z-0"></div>
 
     <!-- Animated cursor background effect -->
     <div id="cursor-anim-bg" class="pointer-events-none fixed top-0 left-0 w-full h-full z-10"></div>
-    <div id="custom-x-cursor" class="hidden md:block pointer-events-none fixed z-50" style="width:48px;height:48px;"></div>
+    <div id="custom-x-cursor" class="hidden md:block pointer-events-none fixed" style="width:48px;height:48px;z-index:9999;"></div>
 
     {{-- Import Navbar --}}
     <x-navbar class="relative z-20" />
 
-    <div class="relative z-20 flex-1 flex items-center">
+    <div class="relative z-20 flex-1 flex items-center mt-[12rem]">
         <!-- Konten utama di sini -->
         <div class="w-full max-w-xl md:ml-24 ml-0 flex flex-col items-start px-4 md:px-6 py-10 mx-auto"
                 data-aos="fade-right"
-                data-aos-duration="1000"
-        >
-            <!-- Typewriter Image -->
-        <div id="typewriter-img-wrapper" class="mb-3" style="position: relative; display: inline-block; width: 340px; height: 80px;">
-            <img id="typewriter-img" src="{{ asset('img/maintheme.webp') }}" alt="Main Theme"
-                    style="width: 340px; height: 80px; object-fit: contain; display: block; clip-path: inset(0 100% 0 0); transition: clip-path 0.08s linear;">
+                data-aos-duration="1000">
+                <!-- Typewriter Image -->
+            <div id="typewriter-img-wrapper" class="mt-[8rem]" style="position: relative; display: inline-block; width: 340px; height: 80px;">
+                <img id="typewriter-img" src="{{ asset('img/maintheme.webp') }}" alt="Main Theme"
+                        style="width: 340px; height: 80px; object-fit: contain; display: block; clip-path: inset(0 100% 0 0); transition: clip-path 0.08s linear;">
 
-            <!-- Cursor -->
-            <span id="typewriter-cursor" style="position: absolute; top: 0; left: 0; width: 2px; height: 100%; background: #fff; display: none;"></span>
+                <!-- Cursor -->
+                <span id="typewriter-cursor" style="position: absolute; top: 0; left: 0; width: 2px; height: 100%; background: #fff; display: none;"></span>
+            </div>
+                <a href="#theme-desc"
+                    class="group inline-block bg-[#F53003] hover:bg-[#c41e00] text-white font-bold px-5 py-2 rounded-md shadow transition-all duration-200 text-base transform hover:scale-105"
+                    style="font-family: 'Inter', Arial, sans-serif;">
+                        Explore Us
+                        <img src="{{ asset('img/explore.webp') }}" alt="Explore Icon"
+                            style="width: 22px; height: 22px; display: inline-block; vertical-align: middle; margin-left: 0.5rem;" />
+                </a>
         </div>
-            <a href="/about"
-                class="group inline-block bg-[#F53003] hover:bg-[#c41e00] text-white font-bold px-5 py-2 rounded-md shadow transition-all duration-200 text-base transform hover:scale-105"
-                style="font-family: 'Inter', Arial, sans-serif;">
-                Explore Us
-                <img src="{{ asset('img/explore.webp') }}" alt="Explore Icon"
-                style="width: 22px; height: 22px; display: inline-block; vertical-align: middle; margin-left: 0.5rem;" />
-            </a>
-        </div>
+    </div>
+
+
+
+    <div class="relative z-10 mt-[18rem] mb-[8rem]">
+        @include('components.theme')
     </div>
 
     <x-footer class="relative z-10" />
@@ -86,39 +100,76 @@
     </script>
     <!-- Cursor animation background -->
     <script>
-        // Animated background effect
-        const cursorBg = document.getElementById('cursor-anim-bg');
-        const customXCursor = document.getElementById('custom-x-cursor');
-        document.addEventListener('mousemove', function(e) {
-            // Background anim
-            cursorBg.innerHTML = `
-                <div style="
-                    position: absolute;
-                    left: ${e.clientX - 100}px;
-                    top: ${e.clientY - 100}px;
-                    width: 200px;
-                    height: 200px;
-                    border-radius: 50%;
-                    background: radial-gradient(circle, rgba(245,48,3,0.25) 0%, rgba(245,48,3,0.08) 70%, transparent 100%);
-                    pointer-events: none;
-                    transition: left 0.1s, top 0.1s;
-                    filter: blur(8px);
-                    z-index: 10;
-                "></div>
-            `;
-            // Custom TEDx cursor image
-            customXCursor.style.left = (e.clientX - 24) + 'px';
-            customXCursor.style.top = (e.clientY - 24) + 'px';
-            customXCursor.innerHTML = `
-                <img src="{{ asset('img/tedunand.webp') }}" alt="TEDx Cursor" style="width:48px;height:48px;object-fit:contain;pointer-events:none;user-select:none;" draggable="false" />
-            `;
-            customXCursor.style.display = 'block';
-        });
-        document.addEventListener('mouseleave', function() {
-            cursorBg.innerHTML = '';
-            customXCursor.style.display = 'none';
-        });
-    </script>
+const cursorBg = document.getElementById('cursor-anim-bg');
+const customXCursor = document.getElementById('custom-x-cursor');
+
+function isDesktop() {
+    return window.innerWidth >= 768;
+}
+
+let cursorEnabled = false;
+let mouseMoveHandler = null;
+let mouseLeaveHandler = null;
+
+function enableCustomCursor() {
+    if (cursorEnabled) return;
+    cursorEnabled = true;
+
+    mouseMoveHandler = function(e) {
+        cursorBg.innerHTML = `
+            <div style="
+                position: absolute;
+                left: ${e.clientX - 100}px;
+                top: ${e.clientY - 100}px;
+                width: 200px;
+                height: 200px;
+                border-radius: 50%;
+                background: radial-gradient(circle, rgba(245,48,3,0.25) 0%, rgba(245,48,3,0.08) 70%, transparent 100%);
+                pointer-events: none;
+                transition: left 0.1s, top 0.1s;
+                filter: blur(8px);
+                z-index: 10;
+            "></div>
+        `;
+        customXCursor.style.left = (e.clientX - 24) + 'px';
+        customXCursor.style.top = (e.clientY - 24) + 'px';
+        customXCursor.innerHTML = `
+            <img src="{{ asset('img/tedunand.webp') }}" alt="TEDx Cursor" style="width:48px;height:48px;object-fit:contain;pointer-events:none;user-select:none;" draggable="false" />
+        `;
+        customXCursor.style.display = 'block';
+    };
+    mouseLeaveHandler = function() {
+        cursorBg.innerHTML = '';
+        customXCursor.style.display = 'none';
+    };
+
+    document.addEventListener('mousemove', mouseMoveHandler);
+    document.addEventListener('mouseleave', mouseLeaveHandler);
+    // Pastikan cursor disembunyikan saat load
+    customXCursor.style.display = 'block';
+}
+
+function disableCustomCursor() {
+    if (!cursorEnabled) return;
+    cursorEnabled = false;
+    cursorBg.innerHTML = '';
+    customXCursor.style.display = 'none';
+    if (mouseMoveHandler) document.removeEventListener('mousemove', mouseMoveHandler);
+    if (mouseLeaveHandler) document.removeEventListener('mouseleave', mouseLeaveHandler);
+}
+
+function updateCursorState() {
+    if (isDesktop()) {
+        enableCustomCursor();
+    } else {
+        disableCustomCursor();
+    }
+}
+
+// Jalankan saat load dan saat resize
+updateCursorState();
+window.addEventListener('resize', updateCursorState);
+</script>
 
     <!-- Animated TEDx X background, multiple spots -->
     <div style="
@@ -232,5 +283,34 @@ document.addEventListener("DOMContentLoaded", function() {
         });
     });
 </script>
+
+<script>
+document.querySelectorAll('a[href^="#"]').forEach(function(link) {
+    link.addEventListener('click', function(e) {
+        var targetId = link.getAttribute('href').replace('#', '');
+        var target = document.getElementById(targetId);
+        if (target) {
+            e.preventDefault();
+            // Scroll dengan kecepatan custom (ms)
+            const scrollSpeed = 50;
+            const targetY = target.getBoundingClientRect().top + window.pageYOffset - 40; // -40 untuk offset navbar
+            const startY = window.pageYOffset;
+            const distance = targetY - startY;
+            let startTime = null;
+
+            function scrollStep(timestamp) {
+                if (!startTime) startTime = timestamp;
+                const progress = Math.min((timestamp - startTime) / scrollSpeed, 1);
+                window.scrollTo(0, startY + distance * progress);
+                if (progress < 1) {
+                    window.requestAnimationFrame(scrollStep);
+                }
+            }
+            window.requestAnimationFrame(scrollStep);
+        }
+    });
+});
+</script>
+
 </body>
 </html>
