@@ -4,9 +4,10 @@
 <link rel="icon" type="image/webp" href="{{ asset('img/tedunand.webp') }}">
 
 @section('content')
+
     <div class="flex min-h-screen bg-gradient-to-br from-gray-900 via-black to-red-900">
         @include('components.sidebar')
-        <main class="flex-1 p-8 relative ml-64">
+        <main class="flex-1 p-8 relative overflow-y-auto h-screen overflow-x-hidden">
             <!-- Decorative Gradient Circles -->
             <div class="absolute right-0 top-0 w-72 h-72 bg-gradient-to-br from-red-500 via-yellow-400 to-transparent opacity-20 rounded-full blur-3xl pointer-events-none"></div>
             <div class="absolute left-1/2 bottom-0 w-64 h-64 bg-gradient-to-tr from-yellow-400 via-red-500 to-transparent opacity-10 rounded-full blur-2xl pointer-events-none"></div>
@@ -52,18 +53,33 @@
 
             <!-- Quick Actions -->
             <div class="mt-12">
-                <h2 class="text-2xl font-bold text-white mb-4">Quick Actions</h2>
-                <div class="flex gap-4">
-                    <a href="{{ route('dashboard.events.event.create') }}" class="bg-red-600 hover:bg-red-800 text-black px-6 py-3 rounded-lg font-semibold shadow hover:scale-105 transition-all">Add Event</a>
-                    <a href="{{ route('dashboard.shop.shop.create') }}" class="bg-pink-400 hover:bg-pink-500 text-black px-6 py-3 rounded-lg font-semibold shadow hover:scale-105 transition-all">Add Shop</a>
-                    <a href="{{ route('dashboard.speaker.speaker.create') }}" class="bg-yellow-300 hover:bg-yellow-500 text-black px-6 py-3 rounded-lg font-semibold shadow hover:scale-105 transition-all">Add Speaker</a>
+                <!-- Desktop: Teks, Mobile: Gambar -->
+                <h2 class="text-2xl font-bold text-white mb-4 text-center md:text-left">Quick Actions</h2>
+
+                <!-- Tombol desktop, gambar mobile -->
+                <div class="flex gap-4 flex-wrap justify-center md:justify-start">
+                    <!-- Desktop: Tombol -->
+                    <a href="{{ route('dashboard.events.event.create') }}" class="hidden md:inline-block bg-red-600 hover:bg-red-800 text-black px-6 py-3 rounded-lg font-semibold shadow hover:scale-105 transition-all">Add Event</a>
+                    <a href="{{ route('dashboard.shop.shop.create') }}" class="hidden md:inline-block bg-pink-400 hover:bg-pink-500 text-black px-6 py-3 rounded-lg font-semibold shadow hover:scale-105 transition-all">Add Shop</a>
+                    <a href="{{ route('dashboard.speaker.speaker.create') }}" class="hidden md:inline-block bg-yellow-300 hover:bg-yellow-500 text-black px-6 py-3 rounded-lg font-semibold shadow hover:scale-105 transition-all">Add Speaker</a>
+
+                    <!-- Mobile: Gambar -->
+                    <a href="{{ route('dashboard.events.event.create') }}" class="block md:hidden bg-red-600 rounded-lg p-2 shadow hover:scale-105 transition-all mx-auto">
+                        <img src="{{ asset('img/admin/events.webp') }}" alt="Add Event" class="w-14 h-14" />
+                    </a>
+                    <a href="{{ route('dashboard.shop.shop.create') }}" class="block md:hidden bg-pink-400 rounded-lg p-2 shadow hover:scale-105 transition-all mx-auto">
+                        <img src="{{ asset('img/admin/shop.webp') }}" alt="Add Shop" class="w-14 h-14" />
+                    </a>
+                    <a href="{{ route('dashboard.speaker.speaker.create') }}" class="block md:hidden bg-yellow-300 rounded-lg p-2 shadow hover:scale-105 transition-all mx-auto">
+                        <img src="{{ asset('img/admin/speaker.webp') }}" alt="Add Speaker" class="w-14 h-14" />
+                    </a>
                 </div>
             </div>
 
             <!-- Recent Admin Activities -->
             <div class="mt-12">
-                <h2 class="text-2xl font-bold text-white mb-4">Recent Admin Activities</h2>
-                <div class="bg-gray-800 rounded-xl shadow-lg p-6">
+                <h2 class="text-2xl font-bold text-white mb-4 text-center">Recent Admin Activities</h2>
+                <div class="bg-gray-800 rounded-xl shadow-lg p-6 text-center md:text-left">
                     <ul>
                         @forelse($activities as $activity)
                             <li class="mb-2 text-white">

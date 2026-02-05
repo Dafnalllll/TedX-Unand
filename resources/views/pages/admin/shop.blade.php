@@ -6,7 +6,7 @@
 @section('content')
 <div class="flex min-h-screen bg-gradient-to-br from-gray-900 via-black to-red-900">
         @include('components.sidebar')
-        <main class="flex-1 p-8 relative overflow-y-auto h-screen ml-64">
+        <main class="flex-1 p-8 relative overflow-y-auto h-screen">
             <!-- Decorative Gradient Circles -->
             <div class="absolute right-0 top-0 w-72 h-72 bg-gradient-to-br from-red-500 via-yellow-400 to-transparent opacity-20 rounded-full blur-3xl pointer-events-none"></div>
             <div class="absolute left-1/2 bottom-0 w-64 h-64 bg-gradient-to-tr from-yellow-400 via-red-500 to-transparent opacity-10 rounded-full blur-2xl pointer-events-none"></div>

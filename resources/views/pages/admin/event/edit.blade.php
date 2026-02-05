@@ -6,10 +6,14 @@
 @section('content')
 <div class="flex min-h-screen bg-gradient-to-br from-gray-900 via-black to-red-900">
     @include('components.sidebar')
-    <main class="flex-1 p-8 relative overflow-y-auto h-screen ml-64">
-        <!-- ...gradient circles... -->
-        <div class="text-white max-w-none w-full px-8 lg:px-8">
-            <h1 class="text-3xl font-bold mb-6">Edit Event</h1>
+    <main class="flex-1 p-8 relative overflow-y-auto h-screen overflow-x-hidden">
+        <!-- Decorative Gradient Circles -->
+        <div class="absolute right-0 top-0 w-72 h-72 bg-gradient-to-br from-red-500 via-yellow-400 to-transparent opacity-20 rounded-full blur-3xl pointer-events-none"></div>
+        <div class="absolute left-1/2 bottom-0 w-64 h-64 bg-gradient-to-tr from-yellow-400 via-red-500 to-transparent opacity-10 rounded-full blur-2xl pointer-events-none"></div>
+
+        <!-- DESKTOP FORM -->
+        <div class="hidden md:block text-white max-w-none w-full px-8 lg:px-8">
+            <h1 class="text-3xl font-bold mb-6 mt-12 md:mt-0 text-center md:text-left">Edit Event</h1>
             @if ($errors->any())
                 <div class="mb-4 p-4 bg-red-600 text-white rounded-xl shadow">
                     <ul class="mb-0">
@@ -19,7 +23,7 @@
                     </ul>
                 </div>
             @endif
-            <form id="eventForm" action="{{ route('dashboard.events.event.update', $event->id) }}" method="POST" enctype="multipart/form-data" class="space-y-6 bg-gray-800 p-8 rounded-2xl shadow-2xl max-w-none w-full" novalidate>
+            <form id="eventFormDesktop" action="{{ route('dashboard.events.event.update', $event->id) }}" method="POST" enctype="multipart/form-data" class="space-y-6 bg-gray-800 p-8 rounded-2xl shadow-2xl max-w-none w-full" novalidate>
                 @csrf
                 @method('PUT')
                 <div class="mb-4">
@@ -50,7 +54,14 @@
                 </div>
                 <div class="mb-4">
                     <label for="photo" class="block text-base font-semibold mb-2 text-red-600">Event Photo</label>
-                    <input type="file" name="photo" id="photo" class="w-full px-5 py-3 rounded-xl bg-gray-700 text-white border-2 border-gray-600" />
+                    <label for="photo" class="flex items-center gap-3 cursor-pointer w-full">
+                        <span class="bg-red-600 text-white px-4 py-2 rounded-xl font-semibold shadow hover:bg-red-700 transition-all duration-200 hover:scale-105">
+                            Upload Photo
+                        </span>
+                        <span id="file-name-desktop" class="text-gray-400 text-xs">No file chosen</span>
+                        <input type="file" name="photo" id="photo" accept="image/*"
+                            class="hidden" onchange="document.getElementById('file-name-desktop').textContent = this.files[0]?.name || 'No file chosen';" />
+                    </label>
                     @if($event->photo)
                         <img src="{{ asset('storage/'.$event->photo) }}" alt="Event Photo" class="w-24 mt-2 rounded" />
                     @endif
@@ -93,6 +104,105 @@
                     </button>
                 </div>
             </form>
+        </div>
+
+        <!-- MOBILE FORM -->
+        <div class="block md:hidden w-full max-w-md mx-auto">
+            <div class="bg-white/90 rounded-3xl shadow-2xl border-2 border-red-400 p-4 mt-12 mb-8 relative overflow-hidden">
+                <!-- Decorative mobile gradient -->
+                <div class="absolute -top-10 -left-10 w-32 h-32 bg-gradient-to-br from-red-500 via-yellow-400 to-transparent opacity-30 rounded-full blur-2xl"></div>
+                <div class="absolute bottom-0 right-0 w-24 h-24 bg-gradient-to-tr from-yellow-400 via-red-500 to-transparent opacity-20 rounded-full blur-2xl"></div>
+                <h2 class="text-2xl font-extrabold text-red-700 mb-4 text-center drop-shadow">Edit Event</h2>
+                @if ($errors->any())
+                    <div class="mb-4 p-3 bg-red-600 text-white rounded-xl shadow text-sm">
+                        <ul class="mb-0">
+                            @foreach ($errors->all() as $error)
+                                <li>{{ $error }}</li>
+                            @endforeach
+                        </ul>
+                    </div>
+                @endif
+                <form id="eventFormMobile" action="{{ route('dashboard.events.event.update', $event->id) }}" method="POST" enctype="multipart/form-data" class="space-y-5" novalidate>
+                    @csrf
+                    @method('PUT')
+                    <div>
+                        <label for="title" class="block text-sm font-bold mb-1 text-red-600">Event Title</label>
+                        <input type="text" name="title" id="title" required
+                            class="w-full px-4 py-3 rounded-xl bg-gray-100 text-gray-900 border border-red-300 focus:border-red-500 focus:ring-2 focus:ring-red-200 shadow transition placeholder-gray-400"
+                            placeholder="Event Title"
+                            value="{{ old('title', $event->title) }}" />
+                    </div>
+                    <div>
+                        <label for="description" class="block text-sm font-bold mb-1 text-red-600">Description</label>
+                        <textarea name="description" id="description" required
+                            class="w-full px-4 py-3 rounded-xl bg-gray-100 text-gray-900 border border-red-300 focus:border-red-500 focus:ring-2 focus:ring-red-200 shadow transition placeholder-gray-400"
+                            placeholder="Description">{{ old('description', $event->description) }}</textarea>
+                    </div>
+                    <div>
+                        <label for="event_date" class="block text-sm font-bold mb-1 text-red-600">Event Date</label>
+                        <input type="date" name="event_date" id="event_date" required
+                            class="w-full px-4 py-3 rounded-xl bg-gray-100 text-gray-900 border border-red-300 focus:border-red-500 focus:ring-2 focus:ring-red-200 shadow transition"
+                            value="{{ old('event_date', \Carbon\Carbon::parse($event->event_date)->format('Y-m-d')) }}" />
+                    </div>
+                    <div>
+                        <label for="location" class="block text-sm font-bold mb-1 text-red-600">Location</label>
+                        <input type="text" name="location" id="location" required
+                            class="w-full px-4 py-3 rounded-xl bg-gray-100 text-gray-900 border border-red-300 focus:border-red-500 focus:ring-2 focus:ring-red-200 shadow transition placeholder-gray-400"
+                            placeholder="Location"
+                            value="{{ old('location', $event->location) }}" />
+                    </div>
+                    <div>
+                        <label for="photo" class="block text-sm font-bold mb-1 text-red-600">Event Photo</label>
+                        <label for="photo" class="flex items-center gap-3 cursor-pointer w-full">
+                            <span class="bg-red-600 text-white px-4 py-2 rounded-xl font-semibold shadow hover:bg-red-700 transition-all duration-200 hover:scale-105">
+                                Upload Photo
+                            </span>
+                            <span id="file-name-mobile" class="text-gray-400 text-xs">No file chosen</span>
+                            <input type="file" name="photo" id="photo" accept="image/*"
+                                class="hidden" onchange="document.getElementById('file-name-mobile').textContent = this.files[0]?.name || 'No file chosen';" />
+                        </label>
+                        @if($event->photo)
+                            <img src="{{ asset('storage/'.$event->photo) }}" alt="Event Photo" class="w-24 mt-2 rounded" />
+                        @endif
+                    </div>
+                    <div>
+                        <label for="event_category_id" class="block text-sm font-bold mb-1 text-red-600">Category</label>
+                        <select name="event_category_id" id="event_category_id" required
+                            class="w-full px-4 py-3 rounded-xl bg-gray-100 text-gray-900 border border-red-300 focus:border-red-500 focus:ring-2 focus:ring-red-200 shadow transition">
+                            <option value="" disabled>Choose Category</option>
+                            @foreach($categories as $category)
+                                <option value="{{ $category->id }}" {{ old('event_category_id', $event->event_category_id) == $category->id ? 'selected' : '' }}>
+                                    {{ $category->name }}
+                                </option>
+                            @endforeach
+                        </select>
+                    </div>
+                    <div>
+                        <label for="registration_link" class="block text-sm font-bold mb-1 text-red-600">Registration Link</label>
+                        <input type="url" name="registration_link" id="registration_link" required
+                            class="w-full px-4 py-3 rounded-xl bg-gray-100 text-gray-900 border border-red-300 focus:border-red-500 focus:ring-2 focus:ring-red-200 shadow transition placeholder-gray-400"
+                            placeholder="https://..."
+                            value="{{ old('registration_link', $event->registration_link) }}" />
+                    </div>
+                    <div>
+                        <label class="block text-sm font-bold mb-1 text-red-600">Speaker</label>
+                        <div class="flex flex-wrap gap-2">
+                            @foreach($speakers as $speaker)
+                                <label class="inline-flex items-center bg-gray-100 px-2 py-1 rounded-xl shadow text-gray-900 border border-red-200">
+                                    <input type="checkbox" name="speaker_id[]" value="{{ $speaker->id }}"
+                                        class="form-checkbox h-4 w-4 text-red-600"
+                                        {{ (collect(old('speaker_id', $event->speakers->pluck('id')->toArray() ?? []))->contains($speaker->id)) ? 'checked' : '' }}>
+                                    <span class="ml-2 text-xs">{{ $speaker->name }}</span>
+                                </label>
+                            @endforeach
+                        </div>
+                    </div>
+                    <button type="submit"
+                        class="w-full bg-gradient-to-r from-red-600 via-yellow-400 to-red-600 hover:from-yellow-400 hover:to-red-700 text-black px-4 py-3 rounded-xl font-bold shadow-lg hover:scale-105 transition-all duration-200 text-base">
+                        <span class="drop-shadow">Update Event</span>
+                    </button>
+                </form>
+            </div>
         </div>
     </main>
 </div>
