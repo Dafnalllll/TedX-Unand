@@ -89,10 +89,21 @@
                     </div>
                 </div>
                 <div class="pt-4">
-                    <button type="submit"
-                        class="w-full bg-gradient-to-r from-red-600 via-yellow-400 to-red-600 hover:from-yellow-400 hover:to-red-700 text-black px-6 py-3 rounded-xl font-bold shadow-lg hover:scale-105 transition-all duration-200">
-                        <span class="drop-shadow">Create Event</span>
-                    </button>
+                    <div class="flex justify-between items-center w-full">
+                        <a href="{{ route('dashboard.events.event') }}"
+                            class="bg-gray-700 text-white px-6 py-3 rounded-xl font-bold shadow-lg hover:bg-red-700 transition-all duration-200 flex items-center group hover:scale-105">
+                            <span class="mr-2 transition-transform duration-200 group-hover:-translate-x-1">
+                                <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7" />
+                                </svg>
+                            </span>
+                            Back to Event
+                        </a>
+                        <button type="submit"
+                            class="bg-gradient-to-r from-red-600 via-yellow-400 to-red-600 hover:from-yellow-400 hover:to-red-700 text-black px-6 py-3 rounded-xl font-bold shadow-lg hover:scale-105 transition-all duration-200">
+                            <span class="drop-shadow">Create Event</span>
+                        </button>
+                    </div>
                 </div>
             </form>
         </div>
@@ -139,13 +150,13 @@
                             placeholder="Location" />
                     </div>
                     <div>
-                        <label for="photo" class="block text-sm font-bold mb-1 text-red-600">Event Photo</label>
-                        <label for="photo" class="flex items-center gap-3 cursor-pointer w-full">
-                            <span class="bg-red-600 text-white px-4 py-2 rounded-xl font-semibold shadow hover:bg-red-700 transition-all duration-200 hover:scale-105">
+                        <label for="photo-mobile" class="block text-sm font-bold mb-1 text-red-600">Event Photo</label>
+                        <label for="photo-mobile" class="flex items-center gap-3 cursor-pointer w-full">
+                            <span class="bg-red-600 text-white px-4 py-2 rounded-xl font-semibold shadow hover:bg-red-700 transition-all duration-200 hover:scale-105 whitespace-nowrap">
                                 Upload Photo
                             </span>
                             <span id="file-name-mobile" class="text-gray-400 text-xs">No file chosen</span>
-                            <input type="file" name="photo" id="photo" accept="image/*"
+                            <input type="file" name="photo" id="photo-mobile" accept="image/*"
                                 class="hidden" onchange="document.getElementById('file-name-mobile').textContent = this.files[0]?.name || 'No file chosen';" />
                         </label>
                     </div>
@@ -181,6 +192,15 @@
                         class="w-full bg-gradient-to-r from-red-600 via-yellow-400 to-red-600 hover:from-yellow-400 hover:to-red-700 text-black px-4 py-3 rounded-xl font-bold shadow-lg hover:scale-105 transition-all duration-200 text-base">
                         <span class="drop-shadow">Create Event</span>
                     </button>
+                    <a href="{{ route('dashboard.events.event') }}"
+                        class="mt-3 w-full flex items-center justify-center bg-gray-700 text-white px-4 py-3 rounded-xl font-bold shadow-lg hover:bg-red-700 transition-all duration-200 group">
+                        <span class="mr-2 transition-transform duration-200 group-hover:-translate-x-1">
+                            <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7" />
+                            </svg>
+                        </span>
+                        Back to Event
+                    </a>
                 </form>
             </div>
         </div>

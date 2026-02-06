@@ -16,8 +16,8 @@ class ShopController extends Controller
      */
     public function index()
     {
-        $merchs = Merch::all();
-        $tickets = Ticket::all();
+        $merchs = Merch::latest()->get();
+        $tickets = Ticket::latest()->get();
         return view('pages.admin.shop', compact('merchs', 'tickets'));
     }
 
@@ -74,7 +74,7 @@ class ShopController extends Controller
             ]);
         }
 
-        return redirect()->route('dashboard.shop.shop.index')->with('success', 'Shop item created!');
+        return redirect()->route('dashboard.shop.shop')->with('success', 'Shop item created!');
     }
 
     /**
@@ -108,7 +108,7 @@ class ShopController extends Controller
                 'type' => 'ticket'
             ]);
         } else {
-            return redirect()->route('dashboard.shop.shop.index')->with('error', 'Item not found!');
+            return redirect()->route('dashboard.shop.shop')->with('error', 'Item not found!');
         }
     }
 
@@ -143,7 +143,7 @@ class ShopController extends Controller
                 'activity' => 'Merchandise <span style="border:1.5px solid #f472b6; color:#f472b6; background:#fff; border-radius:6px; padding:2px 10px; font-weight:bold; display:inline-block;">' . e($merch->item) . '</span> Updated Successfully!.'
             ]);
 
-            return redirect()->route('dashboard.shop.shop.index')->with('success', 'Merchandise updated!');
+            return redirect()->route('dashboard.shop.shop')->with('success', 'Merchandise updated!');
         } elseif ($ticket) {
             $validated = $request->validate([
                 'name' => 'required|string|max:255',
@@ -157,9 +157,9 @@ class ShopController extends Controller
             $ticket->category_id = $validated['category_id'];
             $ticket->save();
 
-            return redirect()->route('dashboard.shop.shop.index')->with('success', 'Ticket updated!');
+            return redirect()->route('dashboard.shop.shop')->with('success', 'Ticket updated!');
         } else {
-            return redirect()->route('dashboard.shop.shop.index')->with('error', 'Item not found!');
+            return redirect()->route('dashboard.shop.shop')->with('error', 'Item not found!');
         }
     }
 
@@ -177,12 +177,12 @@ class ShopController extends Controller
             AdminActivity::create([
                 'activity' => 'Merchandise <span style="border:1.5px solid #f472b6; color:#f472b6; background:#fff; border-radius:6px; padding:2px 10px; font-weight:bold; display:inline-block;">' . e($merchName) . '</span> Deleted Successfully!.'
             ]);
-            return redirect()->route('dashboard.shop.shop.index')->with('success', 'Merchandise deleted!');
+            return redirect()->route('dashboard.shop.shop')->with('success', 'Merchandise deleted!');
         } elseif ($ticket) {
             $ticket->delete();
-            return redirect()->route('dashboard.shop.shop.index')->with('success', 'Ticket deleted!');
+            return redirect()->route('dashboard.shop.shop')->with('success', 'Ticket deleted!');
         } else {
-            return redirect()->route('dashboard.shop.shop.index')->with('error', 'Item not found!');
+            return redirect()->route('dashboard.shop.shop')->with('error', 'Item not found!');
         }
     }
 

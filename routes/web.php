@@ -52,7 +52,7 @@ Route::middleware(['auth', TrackVisitor::class])->group(function () {
 
     // Shop Admin Routes
     Route::prefix('/admin/shop')->name('dashboard.shop.')->group(function () {
-        Route::get('/', [ShopController::class, 'index'])->name('shop.index');           // /admin/shop
+        Route::get('/', [ShopController::class, 'index'])->name('shop');           // /admin/shop
         Route::get('/create', [ShopController::class, 'create'])->name('shop.create');   // /admin/shop/create
         Route::post('/store', [ShopController::class, 'store'])->name('shop.store');     // /admin/shop/store
         Route::get('/edit/{id}', [ShopController::class, 'edit'])->name('shop.edit');    // /admin/shop/edit/{id}

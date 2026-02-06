@@ -69,17 +69,19 @@
                         -
                     @endif
                 </td>
-                <td class="px-6 py-4 flex items-center gap-4">
-                    <a href="{{ route('dashboard.events.event.edit', $event->id) }}">
-                        <img src="{{ asset('img/admin/edit.webp') }}" alt="Edit" class="w-6 h-6 hover:scale-110 transition-transform mt-4" title="Edit"
-                            style="filter: invert(41%) sepia(99%) saturate(7494%) hue-rotate(185deg) brightness(95%) contrast(101%);" />
-                    </a>
-                    <button type="button"
-                        onclick="openDeleteModal('{{ route('dashboard.events.event.delete', $event->id) }}', '{{ $event->title }}')"
-                        style="background: none; border: none; padding: 0;">
-                        <img src="{{ asset('img/admin/delete.webp') }}" alt="Delete" class="w-6 h-6 hover:scale-110 transition-transform mt-4" title="Delete"
-                            style="filter: invert(27%) sepia(99%) saturate(7479%) hue-rotate(-10deg) brightness(95%) contrast(101%);" />
-                    </button>
+                <td class="px-6 py-4 border-b border-gray-700 text-gray-200">
+                    <div class="flex items-center gap-4">
+                        <a href="{{ route('dashboard.events.event.edit', $event->id) }}">
+                            <img src="{{ asset('img/admin/edit.webp') }}" alt="Edit" class="w-12 h-6 hover:scale-110 transition-transform mt-4" title="Edit"
+                                style="filter: invert(41%) sepia(99%) saturate(7494%) hue-rotate(185deg) brightness(95%) contrast(101%);" />
+                        </a>
+                        <button type="button"
+                            onclick="openDeleteModal('{{ route('dashboard.events.event.delete', $event->id) }}', '{{ $event->title }}')"
+                            style="background: none; border: none; padding: 0;">
+                            <img src="{{ asset('img/admin/delete.webp') }}" alt="Delete" class="w-12 h-6 hover:scale-110 transition-transform mt-4" title="Delete"
+                                style="filter: invert(27%) sepia(99%) saturate(7479%) hue-rotate(-10deg) brightness(95%) contrast(101%);" />
+                        </button>
+                    </div>
                 </td>
             </tr>
             @empty

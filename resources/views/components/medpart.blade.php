@@ -17,6 +17,7 @@
         [ 'logo' => asset('img/medpart/kirana.webp')],
         [ 'logo' => asset('img/medpart/classy.webp')],
         [ 'logo' => asset('img/medpart/crief.webp')],
+        [ 'logo' => asset('img/medpart/syne.webp')],
     ];
 @endphp
 
@@ -137,6 +138,13 @@
             >
                 <img src="{{ $medpart['logo'] }}" alt="Media Partner Logo"
                     class="w-32 h-32 mb-2 object-contain medpart-logo">
+            </div>
+        @endforeach
+    </div>
+    <div class="medpart-row row-5">
+        @foreach(array_slice($medparts, -1, 1) as $i => $medpart)
+            <div data-aos="zoom-in-up" data-aos-delay="{{ 100 * $i }}" class="tilt-card relative p-4 flex flex-col items-center overflow-hidden min-h-[120px] justify-center">
+                <img src="{{ $medpart['logo'] }}" alt="Media Partner Logo" class="w-32 h-32 mb-2 object-contain medpart-logo">
             </div>
         @endforeach
     </div>

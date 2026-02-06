@@ -13,7 +13,8 @@ class SpeakerController extends Controller
      */
     public function index()
     {
-        $speakers = Speaker::all();
+
+        $speakers = Speaker::orderBy('created_at', 'desc')->get();
         return view('pages.admin.speaker', compact('speakers'));
     }
 

@@ -21,6 +21,11 @@
             html, body {
                 cursor: none !important;
             }
+            @media (max-width: 767px) {
+                html, body, * {
+                    cursor: auto !important;
+                }
+            }
             @media (min-width: 768px) {
                 html, body, * {
                     cursor: none !important;
@@ -36,10 +41,11 @@
         </div>
         <!-- Custom X Cursor -->
         <img id="custom-x-cursor"
-                src="{{ asset('img/tedunand.webp') }}"
-                style="position:fixed;left:0;top:0;width:48px;height:48px;pointer-events:none;user-select:none;z-index:99999;transform:translate(-50%,-50%);"
-                draggable="false"
-                alt="TEDx Cursor" />
+            src="{{ asset('img/tedunand.webp') }}"
+            style="position:fixed;left:0;top:0;width:48px;height:48px;pointer-events:none;user-select:none;z-index:99999;transform:translate(-50%,-50%);"
+            draggable="false"
+            alt="TEDx Cursor"
+            class="hidden md:block" />
         <script>
             document.addEventListener('mousemove', function(e) {
                 const cursor = document.getElementById('custom-x-cursor');

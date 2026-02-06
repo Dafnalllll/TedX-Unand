@@ -3,9 +3,11 @@
     data-aos-duration="1000"
     style="background-image: url('{{ asset('img/navbar.webp') }}'); background-position: right 30px; background-repeat: no-repeat; background-size: auto 100%;">
     <!-- Gambar dekorasi -->
-    <img src="{{ asset('img/navbar2.webp') }}"
-        alt=""
-        class="pointer-events-none select-none absolute left-0 top-0 w-40 z-0 hidden md:block">
+    <a href="/admin" class="absolute left-0 top-0 w-40 z-0 hidden md:block">
+        <img src="{{ asset('img/navbar2.webp') }}"
+            alt=""
+            class="pointer-events-auto select-none w-40" />
+    </a>
 
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&family=Playfair+Display:wght@700&display=swap" rel="stylesheet">
 
@@ -96,7 +98,9 @@
     <!-- MOBILE NAVBAR -->
     <div class="md:hidden flex flex-col w-full">
         <div class="flex justify-between items-center px-4 py-2 bg-black shadow">
-            <img src="{{ asset('img/TEDxUniversitasAndalas.webp') }}" alt="TEDx Andalas University Logo" class="h-12 w-auto" />
+            <a href="/admin">
+                <img src="{{ asset('img/TEDxUniversitasAndalas.webp') }}" alt="TEDx Andalas University Logo" class="h-12 w-auto cursor-pointer" />
+            </a>
             <button id="navbar-toggle" class="text-white focus:outline-none transition-transform duration-300">
                 <span id="navbar-toggle-icon">
                     <svg width="28" height="28" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">

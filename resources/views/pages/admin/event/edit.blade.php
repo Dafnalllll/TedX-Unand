@@ -98,10 +98,21 @@
                     </div>
                 </div>
                 <div class="pt-4">
-                    <button type="submit"
-                        class="w-full bg-gradient-to-r from-red-600 via-yellow-400 to-red-600 hover:from-yellow-400 hover:to-red-700 text-black px-6 py-3 rounded-xl font-bold shadow-lg hover:scale-105 transition-all duration-200">
-                        <span class="drop-shadow">Update Event</span>
-                    </button>
+                    <div class="flex justify-between items-center w-full">
+                        <a href="{{ route('dashboard.events.event') }}"
+                            class="bg-gray-700 text-white px-6 py-3 rounded-xl font-bold shadow-lg hover:bg-red-700 transition-all duration-200 flex items-center group hover:scale-105">
+                            <span class="mr-2 transition-transform duration-200 group-hover:-translate-x-1">
+                                <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7" />
+                                </svg>
+                            </span>
+                            Back to Event
+                        </a>
+                        <button type="submit"
+                            class="bg-gradient-to-r from-red-600 via-yellow-400 to-red-600 hover:from-yellow-400 hover:to-red-700 text-black px-6 py-3 rounded-xl font-bold shadow-lg hover:scale-105 transition-all duration-200">
+                            <span class="drop-shadow">Update Event</span>
+                        </button>
+                    </div>
                 </div>
             </form>
         </div>
@@ -199,8 +210,17 @@
                     </div>
                     <button type="submit"
                         class="w-full bg-gradient-to-r from-red-600 via-yellow-400 to-red-600 hover:from-yellow-400 hover:to-red-700 text-black px-4 py-3 rounded-xl font-bold shadow-lg hover:scale-105 transition-all duration-200 text-base">
-                        <span class="drop-shadow">Update Event</span>
+                        Update Event
                     </button>
+                    <a href="{{ route('dashboard.events.event') }}"
+                        class="mt-3 w-full flex items-center justify-center bg-gray-700 text-white px-4 py-3 rounded-xl font-bold shadow-lg hover:bg-red-700 transition-all duration-200 group">
+                        <span class="mr-2 transition-transform duration-200 group-hover:-translate-x-1">
+                            <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7" />
+                            </svg>
+                        </span>
+                        Back to Event
+                    </a>
                 </form>
             </div>
         </div>

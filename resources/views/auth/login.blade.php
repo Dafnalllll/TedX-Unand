@@ -108,11 +108,10 @@
             </form>
         </div>
 
-        <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
-        <script>
+<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+<script>
 document.querySelectorAll('form').forEach(function(form) {
     form.addEventListener('submit', function(e) {
-        // Cek apakah ini form mobile atau desktop
         let usernameInput = form.querySelector('input[name="name"]');
         let passwordInput = form.querySelector('input[name="password"]');
         const username = usernameInput ? usernameInput.value.trim() : '';
@@ -122,8 +121,8 @@ document.querySelectorAll('form').forEach(function(form) {
             e.preventDefault();
             Swal.fire({
                 icon: 'warning',
-                title: 'Data Belum Lengkap',
-                text: 'Username dan Password harus diisi!',
+                title: 'Incomplete Data',
+                text: 'Username and Password are required!',
                 confirmButtonColor: '#d61a1a'
             });
         } else if (!username) {
@@ -132,8 +131,8 @@ document.querySelectorAll('form').forEach(function(form) {
                 imageUrl: '{{ asset("img/auth/username.webp") }}',
                 imageWidth: 80,
                 imageHeight: 80,
-                title: 'Username Kosong',
-                text: 'Silakan isi Username Anda!',
+                title: 'Username Required',
+                text: 'Please enter your Username!',
                 confirmButtonColor: '#d61a1a',
                 background: '#e3f2fd',
                 customClass: {
@@ -146,8 +145,8 @@ document.querySelectorAll('form').forEach(function(form) {
                 imageUrl: '{{ asset("img/auth/password.webp") }}',
                 imageWidth: 80,
                 imageHeight: 80,
-                title: 'Password Kosong',
-                text: 'Silakan isi Password Anda!',
+                title: 'Password Required',
+                text: 'Please enter your Password!',
                 confirmButtonColor: '#d61a1a',
                 background: '#fff3e0',
                 customClass: {

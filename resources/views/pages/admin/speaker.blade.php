@@ -6,80 +6,122 @@
 @section('content')
 <div class="flex min-h-screen bg-gradient-to-br from-gray-900 via-black to-red-900">
     @include('components.sidebar')
-    <main class="flex-1 p-8 relative overflow-y-auto h-screen">
+    <main class="flex-1 p-8 relative overflow-y-auto h-screen overflow-x-hidden">
         <!-- Decorative Gradient Circles -->
         <div class="absolute right-0 top-0 w-72 h-72 bg-gradient-to-br from-red-500 via-yellow-400 to-transparent opacity-20 rounded-full blur-3xl pointer-events-none"></div>
         <div class="absolute left-1/2 bottom-0 w-64 h-64 bg-gradient-to-tr from-yellow-400 via-red-500 to-transparent opacity-10 rounded-full blur-2xl pointer-events-none"></div>
 
         <div class="text-white">
-            <h1 class="text-3xl font-bold mb-6">Speaker Management</h1>
-            <div class="flex items-center justify-between mb-4">
+            <h1 class="text-3xl font-bold mb-6 mt-12 md:mt-0 text-center md:text-left">Speaker Management</h1>
+            <div class="flex flex-col gap-3 md:flex-row md:items-center md:justify-between mb-4">
                 <p>Manage your event speakers, add new profiles, and update speaker information easily.</p>
-                {{-- Add Item --}}
-                <a href="{{ route('dashboard.speaker.speaker.create') }}" class="bg-yellow-300 hover:bg-yellow-500 text-black px-6 py-3 rounded-lg font-semibold shadow hover:scale-105 transition-all">Add Speaker</a>
+                <a href="{{ route('dashboard.speaker.speaker.create') }}" class="bg-yellow-300 hover:bg-yellow-500 text-black px-6 py-3 rounded-lg font-semibold shadow hover:scale-105 transition-all w-full md:w-auto text-center">Add Speaker</a>
             </div>
 
-            <!-- Success Message -->
             @if(session('success'))
                 <div class="mb-4 p-4 bg-yellow-300 text-black rounded-xl shadow">
                     {{ session('success') }}
                 </div>
             @endif
 
-            <!-- Merchandise Table -->
-                <h2 class="text-xl font-semibold mb-2 mt-8">Speaker</h2>
-                <div class="overflow-x-auto mb-8">
-                    <table class="min-w-full bg-gradient-to-br from-red-900 via-black to-gray-900 rounded-lg shadow-lg">
-                        <thead>
-                            <tr>
-                                <th class="px-6 py-3 border-b border-gray-700 text-left text-sm font-semibold text-gray-300">Name</th>
-                                <th class="px-6 py-3 border-b border-gray-700 text-left text-sm font-semibold text-gray-300">Description</th>
-                                <th class="px-6 py-3 border-b border-gray-700 text-left text-sm font-semibold text-gray-300">Photo</th>
-                                <th class="px-6 py-3 border-b border-gray-700 text-left text-sm font-semibold text-gray-300">Actions</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            @forelse($speakers as $speaker)
-                            <tr class="hover:bg-gray-700 border-b border-gray-700">
-                                <td class="px-6 py-4 text-gray-200">{{ $speaker->name }}</td>
-                                <td class="px-6 py-4 text-gray-200">{{ $speaker->description }}</td>
-                                <td class="px-6 py-4 text-gray-200">
-                                    <img
-                                        src="{{ $speaker->photo ? asset('storage/'.$speaker->photo) : asset('img/auth/username.webp') }}"
-                                        alt="Speaker Photo"
-                                        class="w-12 h-12 object-cover rounded cursor-pointer"
-                                        onclick="showModal('{{ $speaker->photo ? asset('storage/'.$speaker->photo) : asset('img/auth/username.webp') }}')"
-                                    />
-                                </td>
-                                <td class="px-6 py-4 flex items-center gap-4">
-                                    <a href="{{ route('dashboard.speaker.speaker.edit', $speaker->id) }}">
-                                        <img src="{{ asset('img/admin/edit.webp') }}" alt="Edit" class="w-6 h-6 hover:scale-110 transition-transform mt-2" title="Edit"
-                                            style="filter: invert(41%) sepia(99%) saturate(7494%) hue-rotate(185deg) brightness(95%) contrast(101%);" />
-                                    </a>
-                                    <button type="button"
-                                        onclick="openDeleteModal('{{ route('dashboard.speaker.speaker.delete', $speaker->id) }}', '{{ $speaker->name }}')"
-                                        style="background: none; border: none; padding: 0;">
-                                        <img src="{{ asset('img/admin/delete.webp') }}" alt="Delete" class="w-6 h-6 mt-2 hover:scale-110 transition-transform" title="Delete"
-                                            style="filter: invert(27%) sepia(99%) saturate(7479%) hue-rotate(-10deg) brightness(95%) contrast(101%);" />
-                                    </button>
-                                </td>
-                            </tr>
-                            @empty
-                            <tr>
-                                <td colspan="5" class="text-center text-gray-400 py-8">No Speaker Found.</td>
-                            </tr>
-                            @endforelse
-                        </tbody>
-                    </table>
+            <h2 class="text-xl font-semibold mb-2 mt-8">Speaker</h2>
+
+            <!-- DESKTOP TABLE -->
+            <div class="hidden md:block overflow-x-auto mb-8">
+                <table class="min-w-full bg-gradient-to-br from-red-900 via-black to-gray-900 rounded-lg shadow-lg">
+                    <thead>
+                        <tr>
+                            <th class="px-6 py-3 border-b border-gray-700 text-left text-sm font-semibold text-gray-300">Name</th>
+                            <th class="px-6 py-3 border-b border-gray-700 text-left text-sm font-semibold text-gray-300">Description</th>
+                            <th class="px-6 py-3 border-b border-gray-700 text-left text-sm font-semibold text-gray-300">Photo</th>
+                            <th class="px-6 py-3 border-b border-gray-700 text-left text-sm font-semibold text-gray-300">Actions</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @forelse($speakers as $speaker)
+                        <tr class="hover:bg-gray-700 border-b border-gray-700">
+                            <td class="px-6 py-4 text-gray-200">{{ $speaker->name }}</td>
+                            <td class="px-6 py-4 text-gray-200">{{ $speaker->description }}</td>
+                            <td class="px-6 py-4 text-gray-200">
+                                <img
+                                    src="{{ $speaker->photo ? asset('storage/'.$speaker->photo) : asset('img/auth/username.webp') }}"
+                                    alt="Speaker Photo"
+                                    class="w-12 h-12 object-cover rounded cursor-pointer"
+                                    onclick="showModal('{{ $speaker->photo ? asset('storage/'.$speaker->photo) : asset('img/auth/username.webp') }}')"
+                                />
+                            </td>
+                            <td class="px-6 py-4 flex items-center gap-4">
+                                <a href="{{ route('dashboard.speaker.speaker.edit', $speaker->id) }}">
+                                    <img src="{{ asset('img/admin/edit.webp') }}" alt="Edit" class="w-6 h-6 hover:scale-110 transition-transform mt-2" title="Edit"
+                                        style="filter: invert(41%) sepia(99%) saturate(7494%) hue-rotate(185deg) brightness(95%) contrast(101%);" />
+                                </a>
+                                <button type="button"
+                                    onclick="openDeleteModal('{{ route('dashboard.speaker.speaker.delete', $speaker->id) }}', '{{ $speaker->name }}')"
+                                    style="background: none; border: none; padding: 0;">
+                                    <img src="{{ asset('img/admin/delete.webp') }}" alt="Delete" class="w-6 h-6 mt-2 hover:scale-110 transition-transform" title="Delete"
+                                        style="filter: invert(27%) sepia(99%) saturate(7479%) hue-rotate(-10deg) brightness(95%) contrast(101%);" />
+                                </button>
+                            </td>
+                        </tr>
+                        @empty
+                        <tr>
+                            <td colspan="5" class="text-center text-gray-400 py-8">No Speaker Found.</td>
+                        </tr>
+                        @endforelse
+                    </tbody>
+                </table>
+            </div>
+
+            <!-- MOBILE CARD SLIDER -->
+            <div class="block md:hidden mb-8">
+                <div id="speaker-card-container" class="relative">
+                    @foreach($speakers as $i => $speaker)
+                    <div class="speaker-card {{ $i === 0 ? '' : 'hidden' }} bg-gradient-to-br from-red-900 via-black to-gray-900 rounded-xl shadow-lg p-6 mb-4 text-white transition-all duration-300">
+                        <div class="flex items-center gap-4 mb-4">
+                            <img
+                                src="{{ $speaker->photo ? asset('storage/'.$speaker->photo) : asset('img/auth/username.webp') }}"
+                                alt="Speaker Photo"
+                                class="w-16 h-16 object-cover rounded cursor-pointer"
+                                onclick="showModal('{{ $speaker->photo ? asset('storage/'.$speaker->photo) : asset('img/auth/username.webp') }}')"
+                            />
+                            <div>
+                                <div class="font-bold text-lg">{{ $speaker->name }}</div>
+                            </div>
+                        </div>
+                        <div class="mb-2"><span class="font-semibold">Description:</span> {{ $speaker->description }}</div>
+                        <div class="mt-6 flex items-center gap-4 justify-start">
+                            <span class="font-semibold text-gray-200">Actions:</span>
+                            <a href="{{ route('dashboard.speaker.speaker.edit', $speaker->id) }}">
+                                <span class="inline-flex items-center justify-center w-8 h-8 rounded-full bg-blue-600 hover:bg-blue-800 transition">
+                                    <img src="{{ asset('img/admin/edit.webp') }}" alt="Edit" class="w-4 h-4" title="Edit" />
+                                </span>
+                            </a>
+                            <button type="button"
+                                onclick="openDeleteModal('{{ route('dashboard.speaker.speaker.delete', $speaker->id) }}', '{{ $speaker->name }}')"
+                                style="background: none; border: none; padding: 0;">
+                                <span class="inline-flex items-center justify-center w-8 h-8 rounded-full bg-red-600 hover:bg-red-800 transition">
+                                    <img src="{{ asset('img/admin/delete.webp') }}" alt="Delete" class="w-4 h-4" title="Delete" />
+                                </span>
+                            </button>
+                        </div>
+                    </div>
+                    @endforeach
+
+                    <!-- Navigation Buttons -->
+                    <div class="flex justify-between mt-2">
+                        <button id="prevSpeaker" class="bg-gray-700 text-white px-4 py-2 rounded disabled:opacity-50" disabled>&larr; Back</button>
+                        <button id="nextSpeaker" class="bg-gray-700 text-white px-4 py-2 rounded disabled:opacity-50" {{ count($speakers) <= 1 ? 'disabled' : '' }}>Next &rarr;</button>
+                    </div>
                 </div>
+            </div>
         </div>
     </main>
 </div>
 
 <!-- Modal for Image Preview -->
-<div id="imgModal" class="fixed inset-0 bg-black bg-opacity-70  items-center justify-center z-50 hidden">
+<div id="imgModal" class="fixed inset-0 bg-black bg-opacity-70 items-center justify-center z-50 hidden">
     <span class="absolute top-8 right-10 text-white text-4xl cursor-pointer" onclick="closeModal()">&times;</span>
-        <img id="modalImg" src="" class="max-h-[80vh] max-w-[90vw] rounded shadow-lg border-4 border-white" />
+    <img id="modalImg" src="" class="max-h-[80vh] max-w-[90vw] rounded shadow-lg border-4 border-white" />
 </div>
 
 <!-- Modal Delete -->
@@ -112,6 +154,7 @@
 </div>
 
 <script>
+    // Modal image preview
     function showModal(src) {
         document.getElementById('modalImg').src = src;
         document.getElementById('imgModal').className =
@@ -123,6 +166,7 @@
         document.getElementById('modalImg').src = '';
     }
 
+    // Modal delete
     function openDeleteModal(action, speakerName) {
         const modal = document.getElementById('deleteModal');
         modal.classList.remove('hidden');
@@ -145,26 +189,56 @@
             document.getElementById('deleteSpeakerName').textContent = '';
         }, 200);
     }
+
+    // Mobile card slider
+    document.addEventListener('DOMContentLoaded', function() {
+        const cards = document.querySelectorAll('.speaker-card');
+        let current = 0;
+        const prevBtn = document.getElementById('prevSpeaker');
+        const nextBtn = document.getElementById('nextSpeaker');
+
+        function updateCards() {
+            cards.forEach((card, i) => {
+                card.classList.toggle('hidden', i !== current);
+            });
+            prevBtn.disabled = current === 0;
+            nextBtn.disabled = current === cards.length - 1;
+        }
+
+        prevBtn && prevBtn.addEventListener('click', function() {
+            if (current > 0) {
+                current--;
+                updateCards();
+            }
+        });
+
+        nextBtn && nextBtn.addEventListener('click', function() {
+            if (current < cards.length - 1) {
+                current++;
+                updateCards();
+            }
+        });
+    });
 </script>
 @endsection
 
 <style>
     .modal-enter {
-    opacity: 0;
-    transform: scale(0.95);
-    transition: opacity 0.3s cubic-bezier(.4,0,.2,1), transform 0.3s cubic-bezier(.4,0,.2,1);
-}
-.modal-enter-active {
-    opacity: 1;
-    transform: scale(1);
-}
-.modal-leave {
-    opacity: 1;
-    transform: scale(1);
-    transition: opacity 0.2s cubic-bezier(.4,0,.2,1), transform 0.2s cubic-bezier(.4,0,.2,1);
-}
-.modal-leave-active {
-    opacity: 0;
-    transform: scale(0.95);
-}
+        opacity: 0;
+        transform: scale(0.95);
+        transition: opacity 0.3s cubic-bezier(.4,0,.2,1), transform 0.3s cubic-bezier(.4,0,.2,1);
+    }
+    .modal-enter-active {
+        opacity: 1;
+        transform: scale(1);
+    }
+    .modal-leave {
+        opacity: 1;
+        transform: scale(1);
+        transition: opacity 0.2s cubic-bezier(.4,0,.2,1), transform 0.2s cubic-bezier(.4,0,.2,1);
+    }
+    .modal-leave-active {
+        opacity: 0;
+        transform: scale(0.95);
+    }
 </style>
