@@ -53,45 +53,62 @@
                 </button>
             </div>
         </div>
+
         <!-- Dropdown menu (Events) - letakkan di luar flex utama -->
         <div id="events-dropdown-menu"
             class="fixed left-1/2 top-48 z-40 hidden -translate-x-1/2 w-[700px] max-w-full
                 bg-gradient-to-br from-[#EC9F1E] via-red-500 to-gray-900
                 backdrop-blur-xl rounded-3xl shadow-2xl border border-yellow-300/40 ring-2 ring-yellow-400/10
-                transition-all duration-300 py-10 flex justify-center gap-0"
+                transition-all duration-300 py-10"
             onmouseenter="showDropdown('events')" onmouseleave="hideDropdown('events')">
-            <!-- Card 1: Pre Event -->
-            <a href="/events/pre-event"
-                class="dropdown-card-item group flex flex-col items-center px-8 py-6 transition-all duration-300"
-                style="margin-right: 40px; margin-top: 10px;">
-                <div class="relative">
-                    <img src="{{ asset('img/preevent.png') }}" alt="Pre-Event"
-                        class="w-34 h-40  transition-all duration-500
-                            group-hover:scale-110 group-hover:rotate-6 group-hover:blur-[2px]" />
-                    <div class="absolute bg-gradient-to-t from-red-700/70
-                        scale-y-0 origin-bottom group-hover:scale-y-100 transition-transform duration-500 ease-out"></div>
-                    <span class="absolute bottom-4 left-1/2 -translate-x-1/2 text-xl font-bold text-white
-                        opacity-0 group-hover:opacity-100 group-hover:animate-bounceIn
-                        whitespace-nowrap transition-all duration-500">Pre Event</span>
-                </div>
-            </a>
-            <div class="w-px bg-gray-700/60 rounded-full"
-                style="height: 180px; margin-right: 80px; margin-left: 10px;"></div>
-            <!-- Card 2: Main Event -->
-            <a href="/events/main-event"
-                class="dropdown-card-item group flex flex-col items-center px-8 py-6 transition-all duration-300"
-                style="margin-top: 30px;">
-                <div class="relative">
-                    <img src="{{ asset('img/mainevent.png') }}" alt="Main Event"
-                        class="w-34 h-40  transition-all duration-500
-                            group-hover:scale-110 group-hover:-rotate-6 group-hover:blur-[2px]" />
-                    <div class="absolute bg-gradient-to-t from-yellow-600/70
-                        scale-y-0 origin-bottom group-hover:scale-y-100 transition-transform duration-500 ease-out"></div>
-                    <span class="absolute bottom-4 left-1/2 -translate-x-1/2 text-xl font-bold text-white
-                        opacity-0 group-hover:opacity-100 group-hover:animate-bounceIn
-                    whitespace-nowrap transition-all duration-500">Main Event</span>
-                </div>
-            </a>
+            <div class="flex justify-between items-center w-full h-full px-10 gap-0">
+                <!-- Card 1: Pre Event -->
+                <a href="/events/pre-event"
+                    class="dropdown-card-item group flex flex-col items-center px-6 py-0 transition-all duration-300">
+                    <div class="relative">
+                        <img src="{{ asset('img/preevent.png') }}" alt="Pre-Event"
+                            class="w-30 h-40 transition-all duration-500
+                                group-hover:scale-110 group-hover:rotate-6 group-hover:blur-[2px]" />
+                        <div class="absolute bg-gradient-to-t from-red-700/70
+                            scale-y-0 origin-bottom group-hover:scale-y-100 transition-transform duration-500 ease-out"></div>
+                        <span class="absolute bottom-2 left-1/2 -translate-x-1/2 text-lg font-bold text-white
+                            opacity-0 group-hover:opacity-100 group-hover:animate-bounceIn
+                            whitespace-nowrap transition-all duration-500">Pre Event</span>
+                    </div>
+                </a>
+                <!-- Pembatas -->
+                <div class="w-px bg-gray-700/60 rounded-full h-40 mx-2"></div>
+                <!-- Card 2: Main Event -->
+                <a href="/events/main-event"
+                    class="dropdown-card-item group flex flex-col items-center px-6 py-0 transition-all duration-300">
+                    <div class="relative">
+                        <img src="{{ asset('img/mainevent.png') }}" alt="Main Event"
+                            class="w-30 h-40 transition-all duration-500
+                                group-hover:scale-110 group-hover:-rotate-6 group-hover:blur-[2px]" />
+                        <div class="absolute bg-gradient-to-t from-yellow-600/70
+                            scale-y-0 origin-bottom group-hover:scale-y-100 transition-transform duration-500 ease-out"></div>
+                        <span class="absolute bottom-2 left-1/2 -translate-x-1/2 text-lg font-bold text-white
+                            opacity-0 group-hover:opacity-100 group-hover:animate-bounceIn
+                        whitespace-nowrap transition-all duration-500">Main Event</span>
+                    </div>
+                </a>
+                <!-- Pembatas -->
+                <div class="w-px bg-gray-700/60 rounded-full h-40 mx-2"></div>
+                <!-- Card 3: TVP -->
+                <a href="/events/tvp"
+                    class="dropdown-card-item group flex flex-col items-center px-6 py-0 transition-all duration-300">
+                    <div class="relative">
+                        <img src="{{ asset('img/tvp.png') }}" alt="TVP"
+                            class="w-30 h-40 transition-all duration-500
+                                group-hover:scale-110 group-hover:rotate-3 group-hover:blur-[2px]" />
+                        <div class="absolute bg-gradient-to-t from-blue-700/70
+                            scale-y-0 origin-bottom group-hover:scale-y-100 transition-transform duration-500 ease-out"></div>
+                        <span class="absolute bottom-2 left-1/2 -translate-x-1/2 text-lg font-bold text-white
+                            opacity-0 group-hover:opacity-100 group-hover:animate-bounceIn
+                        whitespace-nowrap transition-all duration-500">TVP</span>
+                    </div>
+                </a>
+            </div>
         </div>
     </div>
 

@@ -168,9 +168,9 @@ class EventController extends Controller
         return view('pages.events', compact('events'));
     }
 
+
     public function mainEventPage()
     {
-        // Ambil event dengan kategori "MainEvent" terbaru
         $mainEvent = Event::with('eventCategory')
             ->whereHas('eventCategory', function ($q) {
                 $q->where('name', 'MainEvent');
@@ -178,7 +178,15 @@ class EventController extends Controller
             ->orderBy('event_date', 'desc')
             ->first();
 
-        return view('pages.mainevent', compact('mainEvent'));
+        $mainEventIds = Event::whereHas('eventCategory', function ($q) {
+            $q->where('name', 'MainEvent');
+        })->pluck('id');
+
+        $speakers = Speaker::whereHas('events', function ($q) use ($mainEventIds) {
+            $q->whereIn('events.id', $mainEventIds);
+        })->get();
+
+        return view('pages.mainevent', compact('mainEvent', 'speakers'));
     }
 
 

@@ -30,6 +30,10 @@ Route::get('/faq', function () {
 
 Route::get('/events', [EventController::class, 'events'])->name('events');
 
+Route::get('/events/tvp', function () {
+    return view('pages.tvp');
+});
+
 
 Route::get('/events/main-event', [EventController::class, 'mainEventPage'])->name('events.main');
 

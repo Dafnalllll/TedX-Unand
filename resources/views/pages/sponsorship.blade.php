@@ -81,6 +81,18 @@
     animation: tedx-spin 40s linear infinite;
 "></div>
 
+<!-- Overlay gelap -->
+<div style="
+    position: fixed;
+    inset: 0;
+    width: 100vw;
+    height: 100vh;
+    z-index: 1;
+    background: rgba(0,0,0,0.45);
+    pointer-events: none;
+    user-select: none;
+"></div>
+
 @push('scripts')
 <script src="https://cdn.jsdelivr.net/npm/aos@2.3.4/dist/aos.js"></script>
 <script>

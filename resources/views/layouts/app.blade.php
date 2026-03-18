@@ -27,7 +27,7 @@
                     cursor: none !important; /* hilangkan cursor hanya di desktop */
                 }
             }
-            
+
         </style>
     </head>
     <body class="font-sans antialiased">
