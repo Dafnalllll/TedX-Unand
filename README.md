@@ -1,61 +1,41 @@
-<p align="center"><a href="https://laravel.com" target="_blank"><img src="https://raw.githubusercontent.com/laravel/art/master/logo-lockup/5%20SVG/2%20CMYK/1%20Full%20Color/laravel-logolockup-cmyk-red.svg" width="400" alt="Laravel Logo"></a></p>
+<!-- Logo TEDx Universitas Andalas -->
+<div class="flex flex-col items-center mt-8 mb-6">
+    <img src="{{ asset('img/tedunand.webp') }}" alt="TEDx Universitas Andalas" class="h-16 mb-2">
+    <span class="text-xl font-bold text-red-600">Universitas Andalas</span>
+</div>
 
-<p align="center">
-<a href="https://github.com/laravel/framework/actions"><img src="https://github.com/laravel/framework/workflows/tests/badge.svg" alt="Build Status"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/dt/laravel/framework" alt="Total Downloads"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/v/laravel/framework" alt="Latest Stable Version"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/l/laravel/framework" alt="License"></a>
-</p>
+<!-- Deskripsi Web -->
+<div class="max-w-2xl mx-auto text-center mb-10">
+    <h1 class="text-3xl font-bold mb-2">TEDxUniversitas Andalas</h1>
+    <p class="text-lg text-gray-700">
+        Website resmi TEDxUniversitas Andalas menghadirkan pengalaman event TEDx yang inspiratif, interaktif, dan informatif. Platform ini memudahkan pengunjung untuk mendapatkan informasi acara, mengenal pembicara, melihat highlight event, serta melakukan pendaftaran tiket secara online.
+    </p>
+</div>
 
-## About Laravel
-
-Laravel is a web application framework with expressive, elegant syntax. We believe development must be an enjoyable and creative experience to be truly fulfilling. Laravel takes the pain out of development by easing common tasks used in many web projects, such as:
-
-- [Simple, fast routing engine](https://laravel.com/docs/routing).
-- [Powerful dependency injection container](https://laravel.com/docs/container).
-- Multiple back-ends for [session](https://laravel.com/docs/session) and [cache](https://laravel.com/docs/cache) storage.
-- Expressive, intuitive [database ORM](https://laravel.com/docs/eloquent).
-- Database agnostic [schema migrations](https://laravel.com/docs/migrations).
-- [Robust background job processing](https://laravel.com/docs/queues).
-- [Real-time event broadcasting](https://laravel.com/docs/broadcasting).
-
-Laravel is accessible, powerful, and provides tools required for large, robust applications.
-
-## Learning Laravel
-
-Laravel has the most extensive and thorough [documentation](https://laravel.com/docs) and video tutorial library of all modern web application frameworks, making it a breeze to get started with the framework.
-
-You may also try the [Laravel Bootcamp](https://bootcamp.laravel.com), where you will be guided through building a modern Laravel application from scratch.
-
-If you don't feel like reading, [Laracasts](https://laracasts.com) can help. Laracasts contains thousands of video tutorials on a range of topics including Laravel, modern PHP, unit testing, and JavaScript. Boost your skills by digging into our comprehensive video library.
-
-## Laravel Sponsors
-
-We would like to extend our thanks to the following sponsors for funding Laravel development. If you are interested in becoming a sponsor, please visit the [Laravel Partners program](https://partners.laravel.com).
-
-### Premium Partners
-
-- **[Vehikl](https://vehikl.com)**
-- **[Tighten Co.](https://tighten.co)**
-- **[Kirschbaum Development Group](https://kirschbaumdevelopment.com)**
-- **[64 Robots](https://64robots.com)**
-- **[Curotec](https://www.curotec.com/services/technologies/laravel)**
-- **[DevSquad](https://devsquad.com/hire-laravel-developers)**
-- **[Redberry](https://redberry.international/laravel-development)**
-- **[Active Logic](https://activelogic.com)**
-
-## Contributing
-
-Thank you for considering contributing to the Laravel framework! The contribution guide can be found in the [Laravel documentation](https://laravel.com/docs/contributions).
-
-## Code of Conduct
-
-In order to ensure that the Laravel community is welcoming to all, please review and abide by the [Code of Conduct](https://laravel.com/docs/contributions#code-of-conduct).
-
-## Security Vulnerabilities
-
-If you discover a security vulnerability within Laravel, please send an e-mail to Taylor Otwell via [taylor@laravel.com](mailto:taylor@laravel.com). All security vulnerabilities will be promptly addressed.
-
-## License
-
-The Laravel framework is open-sourced software licensed under the [MIT license](https://opensource.org/licenses/MIT).
+<!-- Fitur Utama -->
+<div class="max-w-3xl mx-auto grid grid-cols-1 md:grid-cols-2 gap-6 mb-12">
+    <div class="flex items-center space-x-4 p-4 rounded-xl bg-white shadow">
+        <img src="https://cdn.jsdelivr.net/npm/@tabler/icons@2.30.0/icons/icon-calendar.svg" alt="Event Icon" class="h-8 w-8">
+        <span class="font-semibold">Informasi Event</span>
+    </div>
+    <div class="flex items-center space-x-4 p-4 rounded-xl bg-white shadow">
+        <img src="https://cdn.jsdelivr.net/npm/@tabler/icons@2.30.0/icons/icon-user.svg" alt="Speaker Icon" class="h-8 w-8">
+        <span class="font-semibold">Speakers</span>
+    </div>
+    <div class="flex items-center space-x-4 p-4 rounded-xl bg-white shadow">
+        <img src="https://cdn.jsdelivr.net/npm/@tabler/icons@2.30.0/icons/icon-clock.svg" alt="Schedule Icon" class="h-8 w-8">
+        <span class="font-semibold">Jadwal & Aktivitas</span>
+    </div>
+    <div class="flex items-center space-x-4 p-4 rounded-xl bg-white shadow">
+        <img src="https://cdn.jsdelivr.net/npm/@tabler/icons@2.30.0/icons/icon-ticket.svg" alt="Ticket Icon" class="h-8 w-8">
+        <span class="font-semibold">Pendaftaran & Tiket</span>
+    </div>
+    <div class="flex items-center space-x-4 p-4 rounded-xl bg-white shadow">
+        <img src="https://cdn.jsdelivr.net/npm/@tabler/icons@2.30.0/icons/icon-photo.svg" alt="Gallery Icon" class="h-8 w-8">
+        <span class="font-semibold">Gallery & Highlight</span>
+    </div>
+    <div class="flex items-center space-x-4 p-4 rounded-xl bg-white shadow">
+        <img src="https://cdn.jsdelivr.net/npm/@tabler/icons@2.30.0/icons/icon-mail.svg" alt="Contact Icon" class="h-8 w-8">
+        <span class="font-semibold">Kontak & Sosial Media</span>
+    </div>
+</div>
